@@ -6,11 +6,14 @@ import {
   Phone, 
   ArrowRight, 
   CheckCircle2,
-  Navigation
+  Navigation,
+  Building2
 } from 'lucide-react';
 
 interface CountyArea {
   id: string;
+  state: 'NJ' | 'NY' | 'CT';
+  stateName: string;
   countyName: string;
   region: string;
   dispatchTime: string;
@@ -20,50 +23,109 @@ interface CountyArea {
 }
 
 const SERVICE_AREAS: CountyArea[] = [
+  // NEW JERSEY
   {
     id: 'mercer',
-    countyName: 'Mercer County',
-    region: 'Central New Jersey',
-    dispatchTime: 'Same-Day Consultation',
-    permitStatus: 'Direct relationship with local building departments',
+    state: 'NJ',
+    stateName: 'New Jersey',
+    countyName: 'Mercer County, NJ',
+    region: 'Central New Jersey HQ',
+    dispatchTime: 'Same-Day Priority Dispatch',
+    permitStatus: 'Direct relations with municipal building departments & rapid plan approval',
     towns: ['Princeton', 'Hamilton', 'Lawrenceville', 'Robbinsville', 'West Windsor', 'Hopewell', 'Ewing', 'Trenton'],
     recentJobs: 'Complete kitchen remodels, second-story additions, architectural shingle roofs.'
   },
   {
-    id: 'ocean',
-    countyName: 'Ocean County',
+    id: 'ocean-monmouth',
+    state: 'NJ',
+    stateName: 'New Jersey',
+    countyName: 'Ocean & Monmouth, NJ',
     region: 'Jersey Shore & Coastal',
     dispatchTime: 'Within 24 Hours',
-    permitStatus: 'Expertise in coastal wind load codes & flood plain requirements',
-    towns: ['Toms River', 'Brick Township', 'Point Pleasant', 'Jackson', 'Lakewood', 'Manchester', 'Lacey'],
-    recentJobs: 'Custom composite multi-level decks, storm damage roof repairs, stone patios.'
+    permitStatus: 'Coastal wind load codes, stainless hurricane ties, & FEMA flood plain standards',
+    towns: ['Toms River', 'Brick Township', 'Point Pleasant', 'Freehold', 'Marlboro', 'Manalapan', 'Red Bank', 'Middletown', 'Colts Neck'],
+    recentJobs: 'Custom composite multi-level decks, storm damage roof restorations, luxury paver patios.'
   },
   {
-    id: 'monmouth',
-    countyName: 'Monmouth County',
-    region: 'Central & Coastal',
+    id: 'middlesex-north',
+    state: 'NJ',
+    stateName: 'New Jersey',
+    countyName: 'Middlesex & North Jersey, NJ',
+    region: 'Central & North Corridor',
     dispatchTime: 'Within 24 Hours',
-    permitStatus: 'Fast-track permit processing for decks & additions',
-    towns: ['Freehold', 'Marlboro', 'Manalapan', 'Howell', 'Holmdel', 'Red Bank', 'Middletown', 'Colts Neck'],
-    recentJobs: 'Luxury paver patios, James Hardie siding, open-concept interior renovations.'
-  },
-  {
-    id: 'middlesex',
-    countyName: 'Middlesex County',
-    region: 'Central North Corridor',
-    dispatchTime: 'Within 24 Hours',
-    permitStatus: 'Code compliance for residential zoning setbacks',
-    towns: ['Edison', 'Woodbridge', 'Old Bridge', 'East Brunswick', 'Monroe Township', 'Sayreville', 'South Brunswick'],
-    recentJobs: 'Basement finishing, bathroom overhauls, exterior paint & masonry restoration.'
+    permitStatus: 'Full residential zoning setbacks, framing engineering, and building inspection pass',
+    towns: ['Edison', 'Woodbridge', 'Old Bridge', 'East Brunswick', 'Paramus', 'Hoboken', 'Jersey City', 'Montclair', 'South Brunswick'],
+    recentJobs: 'Open-concept interior renovations, James Hardie siding, commercial finish basements.'
   },
   {
     id: 'south-jersey',
-    countyName: 'Burlington & Camden',
+    state: 'NJ',
+    stateName: 'New Jersey',
+    countyName: 'Burlington & Camden, NJ',
     region: 'South New Jersey',
     dispatchTime: 'Within 24–48 Hours',
-    permitStatus: 'Licensed contractor registration on file with all town halls',
-    towns: ['Cherry Hill', 'Mount Laurel', 'Marlton', 'Moorestown', 'Voorhees', 'Medford', 'Haddonfield'],
+    permitStatus: 'Licensed contractor credentials on file across all township building offices',
+    towns: ['Cherry Hill', 'Mount Laurel', 'Marlton', 'Moorestown', 'Voorhees', 'Medford', 'Haddonfield', 'Cinnaminson'],
     recentJobs: 'Deck rebuilds, curbless master showers, foundation repointing, tree clearance.'
+  },
+
+  // NEW YORK
+  {
+    id: 'westchester-rockland',
+    state: 'NY',
+    stateName: 'New York',
+    countyName: 'Westchester & Rockland, NY',
+    region: 'Hudson Valley & Suburbs',
+    dispatchTime: 'Within 24–48 Hours',
+    permitStatus: 'New York State Uniform Code compliance, architectural plans & municipal filings',
+    towns: ['White Plains', 'Yonkers', 'Scarsdale', 'New Rochelle', 'Rye', 'Mamaroneck', 'Nyack', 'Tarrytown', 'Ossining'],
+    recentJobs: 'Slate and architectural roof replacements, structural deck expansions, luxury kitchen overhauls.'
+  },
+  {
+    id: 'nyc-metro',
+    state: 'NY',
+    stateName: 'New York',
+    countyName: 'New York City Metro, NY',
+    region: 'Five Boroughs Metro',
+    dispatchTime: 'Priority Scheduled Consultations',
+    permitStatus: 'NYC Department of Buildings (DOB) compliance & landmark restoration expertise',
+    towns: ['Staten Island', 'Brooklyn', 'Queens', 'Manhattan', 'The Bronx', 'Riverdale', 'Astoria', 'Bay Ridge'],
+    recentJobs: 'Rooftop composite decks, brownstone masonry repointing, complete bathroom gut renovations.'
+  },
+  {
+    id: 'long-island',
+    state: 'NY',
+    stateName: 'New York',
+    countyName: 'Nassau & Suffolk, NY',
+    region: 'Long Island Shore & Sound',
+    dispatchTime: 'Within 24–48 Hours',
+    permitStatus: 'Long Island municipal permit processing, windstorm fasteners, & moisture sealing',
+    towns: ['Garden City', 'Great Neck', 'Manhasset', 'Oyster Bay', 'Huntington', 'Melville', 'Smithtown', 'Massapequa'],
+    recentJobs: 'Multi-tiered outdoor living spaces, premium roofing systems, Hardie board siding transformations.'
+  },
+
+  // CONNECTICUT
+  {
+    id: 'fairfield-ct',
+    state: 'CT',
+    stateName: 'Connecticut',
+    countyName: 'Fairfield County, CT',
+    region: 'Connecticut Gold Coast',
+    dispatchTime: 'Within 24–48 Hours',
+    permitStatus: 'Connecticut State Building Code (CSBC) & Department of Consumer Protection registered',
+    towns: ['Greenwich', 'Stamford', 'Norwalk', 'Westport', 'Darien', 'Fairfield', 'New Canaan', 'Ridgefield', 'Wilton'],
+    recentJobs: 'Architectural composite decking, cedar shake & copper flashing roof builds, high-end master suite remodels.'
+  },
+  {
+    id: 'new-haven-ct',
+    state: 'CT',
+    stateName: 'Connecticut',
+    countyName: 'New Haven County, CT',
+    region: 'South Central Connecticut',
+    dispatchTime: 'Within 24–48 Hours',
+    permitStatus: 'Municipal building inspector relations & 100% Connecticut code pass approval',
+    towns: ['Milford', 'New Haven', 'Orange', 'Woodbridge', 'Branford', 'Guilford', 'Cheshire', 'Hamden'],
+    recentJobs: 'Custom porticos, exterior waterproofing, full interior restorations, masonry walkways.'
   }
 ];
 
@@ -72,9 +134,14 @@ interface ServiceAreaSectionProps {
 }
 
 export const ServiceAreaSection: React.FC<ServiceAreaSectionProps> = ({ onOpenEstimateModal }) => {
+  const [selectedStateFilter, setSelectedStateFilter] = useState<'ALL' | 'NJ' | 'NY' | 'CT'>('ALL');
   const [selectedCountyId, setSelectedCountyId] = useState<string>('mercer');
 
-  const activeCounty = SERVICE_AREAS.find(c => c.id === selectedCountyId) || SERVICE_AREAS[0];
+  const filteredAreas = selectedStateFilter === 'ALL' 
+    ? SERVICE_AREAS 
+    : SERVICE_AREAS.filter(area => area.state === selectedStateFilter);
+
+  const activeCounty = SERVICE_AREAS.find(c => c.id === selectedCountyId) || filteredAreas[0] || SERVICE_AREAS[0];
 
   return (
     <section id="service-area-section" className="py-20 md:py-28 bg-gradient-to-b from-[#071630] via-[#0a1e42] to-[#071630] text-slate-100 relative overflow-hidden border-t border-b border-blue-500/30 shadow-2xl">
@@ -97,49 +164,93 @@ export const ServiceAreaSection: React.FC<ServiceAreaSectionProps> = ({ onOpenEs
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-900/80 border border-blue-400/50 text-xs font-bold text-cyan-300 uppercase tracking-widest mb-3 shadow-inner">
               <Navigation className="w-3.5 h-3.5 text-cyan-400" />
-              <span>New Jersey Service Corridor</span>
+              <span>Tri-State Service Corridor</span>
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight">
-              Township Coverage & Project Dispatch
+              Serving NY, NJ and Connecticut
             </h2>
-            <p className="mt-2 text-blue-100/90 text-sm sm:text-base max-w-xl leading-relaxed">
-              We know New Jersey building codes inside and out. Select your county to inspect active towns, dispatch windows, and municipal permit turnaround.
+            <p className="mt-2 text-blue-100/90 text-sm sm:text-base max-w-2xl leading-relaxed">
+              We know New York, New Jersey, and Connecticut municipal building codes inside and out. Select your state or region to inspect active covered towns, dispatch windows, and municipal permit turnaround.
             </p>
           </div>
 
-          <div className="flex items-center gap-3 p-3.5 bg-blue-950/80 rounded-2xl border border-blue-600/40 shadow-md backdrop-blur-md">
+          <div className="flex items-center gap-3 p-3.5 bg-blue-950/80 rounded-2xl border border-blue-600/40 shadow-md backdrop-blur-md shrink-0">
             <div className="p-2 rounded-xl bg-blue-900/60 text-cyan-300">
-              <MapPin className="w-5 h-5 text-cyan-400 shrink-0" />
+              <Building2 className="w-5 h-5 text-cyan-400 shrink-0" />
             </div>
             <div className="text-xs">
-              <span className="font-bold text-white block">Headquartered in Central NJ</span>
-              <span className="text-blue-200">Fast mobilization across 5 counties</span>
+              <span className="font-bold text-white block">Central Tri-State Mobilization</span>
+              <span className="text-emerald-300 font-semibold">Active Crews in NY, NJ & CT</span>
             </div>
           </div>
         </div>
 
+        {/* State Filter Bar */}
+        <div className="flex flex-wrap items-center gap-2 mb-6">
+          <span className="text-xs font-bold uppercase tracking-wider text-blue-300 mr-1">
+            Filter State:
+          </span>
+          {[
+            { id: 'ALL', label: 'All Tri-State (NY, NJ, CT)' },
+            { id: 'NJ', label: 'New Jersey' },
+            { id: 'NY', label: 'New York' },
+            { id: 'CT', label: 'Connecticut' }
+          ].map((tab) => {
+            const isActive = selectedStateFilter === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => {
+                  setSelectedStateFilter(tab.id as 'ALL' | 'NJ' | 'NY' | 'CT');
+                  // If current selected area is not in the new filter, pick the first one
+                  const targetList = tab.id === 'ALL' 
+                    ? SERVICE_AREAS 
+                    : SERVICE_AREAS.filter(a => a.state === tab.id);
+                  if (targetList.length > 0 && !targetList.some(a => a.id === selectedCountyId)) {
+                    setSelectedCountyId(targetList[0].id);
+                  }
+                }}
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  isActive
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-md shadow-blue-600/40 border border-cyan-400'
+                    : 'bg-[#0b1c3d]/90 hover:bg-blue-900/70 text-blue-200 hover:text-white border border-blue-800/60'
+                }`}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
+        </div>
+
         {/* County Selector Tabs */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 mb-8">
-          {SERVICE_AREAS.map((county) => {
-            const isSelected = county.id === selectedCountyId;
+          {filteredAreas.map((county) => {
+            const isSelected = county.id === activeCounty.id;
             return (
               <button
                 key={county.id}
                 onClick={() => setSelectedCountyId(county.id)}
-                className={`p-4 rounded-2xl border text-left transition-all cursor-pointer ${
+                className={`p-3.5 sm:p-4 rounded-2xl border text-left transition-all cursor-pointer relative ${
                   isSelected
                     ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white border-cyan-400 shadow-lg shadow-blue-600/40 scale-[1.02]'
                     : 'bg-[#0b1c3d]/80 hover:bg-blue-900/60 text-blue-200 hover:text-white border-blue-800/60 shadow-xs backdrop-blur-md'
                 }`}
               >
-                <div className={`text-[10px] font-bold uppercase tracking-wider mb-1 ${
-                  isSelected ? 'text-cyan-100' : 'text-cyan-400'
-                }`}>
-                  {county.region}
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className={`text-[10px] font-bold uppercase tracking-wider ${
+                    isSelected ? 'text-cyan-100' : 'text-cyan-400'
+                  }`}>
+                    {county.region}
+                  </span>
+                  <span className={`text-[10px] font-black px-1.5 py-0.5 rounded font-mono ${
+                    isSelected ? 'bg-white/20 text-white' : 'bg-blue-950/80 text-cyan-300 border border-blue-800'
+                  }`}>
+                    {county.state}
+                  </span>
                 </div>
                 <div className="text-sm font-black leading-tight text-white">
                   {county.countyName}
@@ -157,10 +268,13 @@ export const ServiceAreaSection: React.FC<ServiceAreaSectionProps> = ({ onOpenEs
             
             <div>
               <div className="flex items-center gap-2 text-xs font-bold text-cyan-400 uppercase tracking-widest mb-1">
-                <span>Active Municipalities Served</span>
+                <span>Active Municipalities Served in {activeCounty.stateName}</span>
               </div>
-              <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-                {activeCounty.countyName}
+              <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
+                <span>{activeCounty.countyName}</span>
+                <span className="text-xs px-2.5 py-1 rounded-lg bg-blue-600/40 border border-blue-400/50 text-cyan-200 font-mono">
+                  {activeCounty.state}
+                </span>
               </h3>
             </div>
 
@@ -209,7 +323,7 @@ export const ServiceAreaSection: React.FC<ServiceAreaSectionProps> = ({ onOpenEs
             <div className="pt-3 border-t border-blue-800/60 space-y-1">
               <div className="text-[11px] uppercase tracking-wider text-blue-300 font-bold flex items-center gap-1.5">
                 <ShieldCheck className="w-4 h-4 text-cyan-400" />
-                <span>Municipal Permitting Knowledge</span>
+                <span>Building Department Permitting Knowledge</span>
               </div>
               <p className="text-xs text-blue-100/90 leading-relaxed font-medium">
                 {activeCounty.permitStatus}

@@ -37,20 +37,19 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenEstimateModal }) => {
   };
 
   return (
-    <header className="sticky top-0 sm:top-2 z-50 w-full px-2 sm:px-6 pt-1 sm:pt-0 transition-all duration-300">
-      <div className="max-w-7xl mx-auto">
-        {/* Floating Architectural Navigation Bar */}
-        <nav 
-          className={`relative transition-all duration-300 rounded-xl sm:rounded-2xl md:rounded-3xl border ${
-            scrolled 
-              ? 'bg-slate-950/98 backdrop-blur-2xl border-blue-500/50 shadow-[0_16px_40px_-10px_rgba(0,0,0,0.9)] shadow-blue-950/60' 
-              : 'bg-slate-900/95 backdrop-blur-xl border-slate-700/80 shadow-[0_10px_30px_-8px_rgba(0,0,0,0.7)]'
-          } px-3 sm:px-5 py-1.5 sm:py-2`}
-        >
-          {/* Subtle Top Specular Lighting Line */}
-          <div className="absolute inset-x-10 top-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent pointer-events-none rounded-full" />
+    <header 
+      className={`sticky top-0 z-50 w-full transition-all duration-300 bg-slate-950 border-b ${
+        scrolled 
+          ? 'border-blue-500/50 shadow-[0_16px_40px_-10px_rgba(0,0,0,0.9)] shadow-blue-950/60' 
+          : 'border-slate-800 shadow-[0_10px_30px_-8px_rgba(0,0,0,0.7)]'
+      } before:content-[''] before:absolute before:inset-x-0 before:-top-[1000px] before:h-[1000px] before:bg-slate-950 before:pointer-events-none`}
+    >
+      {/* Subtle Top Specular Lighting Line */}
+      <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent pointer-events-none" />
 
-          <div className="flex items-center justify-between h-14 sm:h-16 relative">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        {/* Architectural Navigation Bar */}
+        <nav className="flex items-center justify-between h-14 sm:h-16 relative">
             
             {/* LEFT: BRAND IDENTITY */}
             <div className="flex items-center gap-3 shrink-0">
@@ -70,8 +69,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenEstimateModal }) => {
                     <span className="text-base sm:text-lg font-black text-white tracking-wide uppercase font-sans group-hover:text-cyan-300 transition-colors">
                       VASQUEZ
                     </span>
-                    <span className="hidden xl:inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-extrabold tracking-widest uppercase bg-blue-950/90 text-cyan-400 border border-blue-800/80">
-                      NJ HIC LLC
+                    <span className="hidden xl:inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-extrabold tracking-widest uppercase bg-blue-950/90 text-cyan-300 border border-blue-700/80">
+                      NY · NJ · CT
                     </span>
                   </div>
                   <div className="flex items-center gap-1.5 mt-1">
@@ -81,6 +80,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenEstimateModal }) => {
                     <span className="hidden sm:inline text-slate-500 text-[10px]">·</span>
                     <span className="hidden sm:inline text-[10px] font-mono font-medium text-cyan-400">
                       Lic #13VH13437500
+                    </span>
+                    <span className="hidden md:inline text-slate-500 text-[10px]">·</span>
+                    <span className="hidden md:inline text-[10px] font-bold text-emerald-400">
+                      Serving NY, NJ & CT
                     </span>
                   </div>
                 </div>
@@ -117,8 +120,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenEstimateModal }) => {
                 onClick={() => scrollTo('service-area-section')}
                 className="px-3.5 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800/80 transition-all cursor-pointer flex items-center gap-1.5"
               >
-                <MapPin className="w-3.5 h-3.5 text-blue-400" />
-                <span>Coverage</span>
+                <MapPin className="w-3.5 h-3.5 text-cyan-400" />
+                <span>NY, NJ & CT</span>
               </button>
             </div>
 
@@ -160,7 +163,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenEstimateModal }) => {
               </button>
             </div>
 
-          </div>
         </nav>
 
         {/* MOBILE SLIDE-DOWN DRAWER MENU */}
@@ -172,7 +174,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenEstimateModal }) => {
               </div>
               <div>
                 <div className="text-sm font-black text-white uppercase tracking-wider">Vasquez Home Improvement</div>
-                <div className="text-[11px] text-cyan-400 font-mono">NJ Lic #13VH13437500 · Fully Insured</div>
+                <div className="text-[11px] text-cyan-400 font-mono">Lic #13VH13437500 · Serving NY, NJ & CT</div>
               </div>
             </div>
 
@@ -204,8 +206,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenEstimateModal }) => {
               onClick={() => scrollTo('service-area-section')}
               className="w-full text-left py-2.5 px-3 text-slate-200 hover:text-white hover:bg-slate-800/80 rounded-xl text-xs font-bold flex items-center gap-2.5 cursor-pointer"
             >
-              <MapPin className="w-4 h-4 text-blue-400" />
-              <span>Coverage</span>
+              <MapPin className="w-4 h-4 text-cyan-400" />
+              <span>NY, NJ & CT Coverage</span>
             </button>
 
             <div className="pt-3 border-t border-slate-800 flex flex-col gap-2">

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
   Phone, 
   ArrowRight, 
@@ -73,17 +73,20 @@ const VALUE_PILLARS = [
   }
 ];
 
+const DEFAULT_HERO_IMAGE = '/vasquez_white_jumper_hero.png?v=8';
+
 export const HeroSection: React.FC<HeroSectionProps> = ({ 
   onOpenEstimateModal, 
   onSelectService 
 }) => {
-  useEffect(() => {
+  const [heroImage] = useState<string>(() => {
     try {
-      localStorage.removeItem('vasquez_custom_hero_image');
+      const saved = localStorage.getItem('vasquez_custom_hero_image');
+      return saved || DEFAULT_HERO_IMAGE;
     } catch {
-      // Storage cleanup
+      return DEFAULT_HERO_IMAGE;
     }
-  }, []);
+  });
 
   const scrollToReviews = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -132,14 +135,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs text-cyan-300 font-semibold tracking-wide uppercase pt-1 pb-4 sm:pb-6">
           <span className="flex items-center gap-1.5 text-cyan-300">
             <ShieldCheck className="w-4 h-4 text-cyan-400" />
-            <span>New Jersey Licensed Contractor LLC</span>
+            <span>Licensed & Insured Contractor LLC</span>
           </span>
           <span aria-hidden="true" className="text-blue-400/50">·</span>
           <span className="font-mono text-cyan-200">Lic #13VH13437500</span>
           <span aria-hidden="true" className="text-blue-400/50 hidden sm:inline">·</span>
-          <span className="text-blue-200/90 hidden sm:inline">Fully Insured & Bonded</span>
+          <span className="text-emerald-300 font-bold hidden sm:inline">Serving NY, NJ and Connecticut</span>
           <span aria-hidden="true" className="text-blue-400/50 hidden md:inline">·</span>
-          <span className="text-blue-200/90 hidden md:inline">Mercer · Middlesex · Ocean · Monmouth</span>
+          <span className="text-blue-200/90 hidden md:inline">Tri-State Building Code Compliant</span>
         </div>
 
         {/* 2-Column Architectural Hero Showcase */}
@@ -153,12 +156,38 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <h1 className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.08]">
                 Master Craftsmanship.{' '}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-cyan-200 to-sky-400">
-                  Built for Central New Jersey Homes.
+                  Serving NY, NJ and Connecticut.
                 </span>
               </h1>
+
+              {/* Mobile Hero Image (Positioned directly above the description paragraph on mobile) */}
+              <div className="block lg:hidden pt-2 pb-2 w-full">
+                <div className="relative w-full flex flex-col items-center justify-center">
+                  {/* Subtle mobile radial spotlight behind image */}
+                  <div className="absolute w-[280px] sm:w-[360px] h-[280px] sm:h-[360px] bg-gradient-to-tr from-blue-600/30 via-cyan-500/18 to-transparent rounded-full blur-2xl pointer-events-none" />
+                  
+                  <img
+                    src={heroImage}
+                    alt="Vasquez Home Improvement - Master Craftsmen"
+                    className="relative z-10 w-full max-w-[420px] sm:max-w-[500px] h-auto max-h-[380px] sm:max-h-[460px] object-contain select-none filter drop-shadow-[0_16px_36px_rgba(0,102,255,0.36)]"
+                    loading="eager"
+                  />
+
+                  {/* Grounding floor shadow */}
+                  <div className="w-2/3 h-5 bg-gradient-to-r from-transparent via-slate-950/80 to-transparent blur-sm -mt-3 pointer-events-none" />
+
+                  {/* Sleek mobile proof pill */}
+                  <div className="mt-2 z-10 bg-slate-900/90 backdrop-blur-md border border-cyan-500/30 px-3.5 py-1.5 rounded-full shadow-lg flex items-center gap-2 text-[11px] text-slate-200">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+                    <span className="font-semibold text-white">Owner on Every Site</span>
+                    <span className="text-slate-500">·</span>
+                    <span className="text-cyan-300 font-bold text-[10px]">Serving NY, NJ & CT</span>
+                  </div>
+                </div>
+              </div>
               
               <p className="text-base sm:text-lg text-slate-300 max-w-2xl leading-relaxed font-normal">
-                Direct owner-supervised construction delivering structural composite decks, precision roofing, luxury kitchen and bath remodels, additions, and complete interior restorations. Guaranteed written timelines with zero subcontracting runaround.
+                Direct owner-supervised construction delivering structural composite decks, precision roofing, luxury kitchen and bath remodels, additions, and complete interior restorations across New York, New Jersey, and Connecticut. Guaranteed written timelines with zero subcontracting runaround.
               </p>
             </div>
 
@@ -193,7 +222,25 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </div>
             </div>
 
+            {/* Direct Primary Action Suite */}
+            <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+              <button
+                onClick={onOpenEstimateModal}
+                className="px-6 py-3.5 rounded-xl text-sm font-bold bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white shadow-lg shadow-blue-600/30 transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2 cursor-pointer group"
+              >
+                <span>Schedule Free Consultation</span>
+                <ArrowRight className="w-4 h-4 text-white group-hover:translate-x-1 transition-transform" />
+              </button>
 
+              <a
+                href="tel:6093569141"
+                className="px-5 py-3.5 rounded-xl text-sm font-semibold bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 hover:border-slate-500 text-slate-200 hover:text-white transition-all flex items-center justify-center gap-2.5 cursor-pointer shadow-sm active:scale-95"
+              >
+                <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <Phone className="w-4 h-4 text-cyan-400" />
+                <span className="font-mono tracking-tight font-bold">(609) 356-9141</span>
+              </a>
+            </div>
 
             {/* Social Proof & 5-Star Homeowner Credibility */}
             <div className="pt-2 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 border-t border-slate-800/80">
@@ -248,7 +295,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 </div>
                 
                 <span className="text-xs text-slate-300 group-hover:text-white transition-colors mt-0.5">
-                  Top-Rated Licensed Home Improvement in Mercer, Middlesex & Ocean
+                  Top-Rated Licensed Home Improvement across NY, NJ & Connecticut
                 </span>
               </a>
 
@@ -258,7 +305,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <div className="grid grid-cols-3 gap-4 pt-1 text-left">
               <div className="border-l-2 border-blue-500/60 pl-3">
                 <div className="text-xl sm:text-2xl font-black font-mono text-white tracking-tight">15+</div>
-                <div className="text-[11px] text-slate-400 font-medium">Years Central NJ Experience</div>
+                <div className="text-[11px] text-slate-400 font-medium">Years Tri-State Experience</div>
               </div>
               <div className="border-l-2 border-cyan-500/60 pl-3">
                 <div className="text-xl sm:text-2xl font-black font-mono text-white tracking-tight">100%</div>
@@ -272,18 +319,78 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           </div>
 
-          {/* Right Column: Craftsmen & House Graphic (Prominent, High-Presence Presentation on Desktop) */}
-          <div className="lg:col-span-7 xl:col-span-7 relative w-full flex flex-col items-center justify-center py-2 lg:py-0">
+          {/* Right Column: Craftsmen & House Graphic (Desktop Only) */}
+          <div className="hidden lg:flex lg:col-span-7 xl:col-span-7 relative w-full flex-col items-center justify-center py-2 lg:py-0 select-none">
             
-            {/* The Hero Image (Authentic Craftsmen Made Big & Prominent on Desktop) */}
-            <div className="relative z-10 w-full flex items-center justify-center lg:justify-end">
-              <img
-                src="/vasquez_white_jumper_hero.png?v=8"
-                alt="Vasquez Home Improvement - Full-body home renovation craftsmen, painter in white work jumper holding brush with dripping yellow paint and roller, carpenter with blue hardhat and toolbelt, in front of a blue and white craftsman house with extension ladder"
-                referrerPolicy="no-referrer"
-                className="w-full max-w-[680px] sm:max-w-[780px] md:max-w-2xl lg:max-w-[850px] xl:max-w-[960px] 2xl:max-w-[1040px] h-auto max-h-[680px] sm:max-h-[780px] lg:max-h-[860px] xl:max-h-[940px] 2xl:max-h-[1020px] object-contain select-none transition-transform duration-300 hover:scale-[1.01]"
-                loading="eager"
+            {/* Multi-layered Architectural Spotlight & Halo */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              {/* Core radiant sapphire/cyan backlight */}
+              <div 
+                className="w-[520px] xl:w-[640px] h-[520px] xl:h-[640px] bg-gradient-to-tr from-blue-600/30 via-cyan-500/18 to-transparent rounded-full blur-3xl animate-pulse" 
+                style={{ animationDuration: '6s' }} 
               />
+              {/* Concentric blueprint blueprint contour rings */}
+              <div className="absolute w-[440px] xl:w-[540px] h-[440px] xl:h-[540px] rounded-full border border-blue-400/10 pointer-events-none" />
+              <div className="absolute w-[600px] xl:w-[720px] h-[600px] xl:h-[720px] rounded-full border border-cyan-400/5 pointer-events-none" />
+            </div>
+
+            {/* Stage Showcase Container */}
+            <div className="relative z-10 w-full flex flex-col items-center justify-center">
+              
+              {/* Floating Top Header Badges */}
+              <div className="w-full flex items-center justify-between px-2 xl:px-4 -mb-5 z-20 relative">
+                {/* Badge 1: Owner-Supervised Active Site */}
+                <div className="bg-slate-900/90 backdrop-blur-xl border border-cyan-500/35 shadow-[0_12px_32px_rgba(0,0,0,0.65)] rounded-2xl px-4 py-2.5 flex items-center gap-3 transition-transform hover:scale-105">
+                  <div className="relative flex h-2.5 w-2.5 shrink-0">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                  </div>
+                  <div className="text-left">
+                    <div className="text-xs font-black tracking-tight text-white flex items-center gap-1.5">
+                      <span>Owner-Supervised Site</span>
+                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-500/20 text-cyan-300 font-mono font-bold">TODAY</span>
+                    </div>
+                    <div className="text-[11px] text-slate-300 font-medium">Master Builder Vasquez On Daily Execution</div>
+                  </div>
+                </div>
+
+                {/* Badge 2: Corridor Location Pill */}
+                <div className="hidden xl:flex items-center gap-1.5 bg-slate-950/80 backdrop-blur-md border border-slate-700/80 px-3 py-1.5 rounded-full text-[11px] text-blue-200 shadow-lg">
+                  <MapPin className="w-3.5 h-3.5 text-cyan-400" />
+                  <span className="font-semibold text-cyan-300">Serving NY, NJ & Connecticut</span>
+                </div>
+              </div>
+
+              {/* The Hero Image (Authentic Craftsmen / Custom Image Made Big & Prominent on Desktop) */}
+              <div className="relative w-full flex items-center justify-center group">
+                <img
+                  src={heroImage}
+                  alt="Vasquez Home Improvement - Master Craftsmen"
+                  referrerPolicy="no-referrer"
+                  className="w-full max-w-[680px] sm:max-w-[780px] md:max-w-2xl lg:max-w-[850px] xl:max-w-[960px] 2xl:max-w-[1040px] h-auto max-h-[680px] sm:max-h-[780px] lg:max-h-[860px] xl:max-h-[940px] 2xl:max-h-[1020px] object-contain select-none transition-all duration-500 group-hover:scale-[1.015] filter drop-shadow-[0_24px_48px_rgba(30,64,175,0.4)]"
+                  loading="eager"
+                />
+              </div>
+
+              {/* Grounding floor shadow */}
+              <div className="w-3/4 max-w-[620px] h-8 bg-gradient-to-r from-transparent via-slate-950/85 to-transparent blur-md -mt-6 pointer-events-none" />
+
+              {/* Floating Bottom Badge: Guaranteed Written Estimate & Code Pass */}
+              <div className="self-end -mt-6 mr-2 xl:mr-6 z-20 relative transition-transform hover:scale-105">
+                <div className="bg-slate-900/90 backdrop-blur-xl border border-blue-500/35 shadow-[0_16px_36px_rgba(0,0,0,0.7)] rounded-2xl px-4 py-2.5 flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center text-white shrink-0 shadow-md shadow-blue-500/30">
+                    <CheckCircle2 className="w-5 h-5 text-white" />
+                  </div>
+                  <div className="text-left">
+                    <div className="text-xs font-black tracking-tight text-white flex items-center gap-1.5">
+                      <span>Guaranteed Written Estimate</span>
+                      <span className="text-[10px] text-cyan-300 font-mono font-bold">0% SURPRISES</span>
+                    </div>
+                    <div className="text-[11px] text-slate-300 font-medium">100% Township Inspection Approval Record</div>
+                  </div>
+                </div>
+              </div>
+
             </div>
 
           </div>

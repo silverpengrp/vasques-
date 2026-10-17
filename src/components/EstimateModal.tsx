@@ -78,7 +78,7 @@ export const EstimateModal: React.FC<EstimateModalProps> = ({
           <div>
             <div className="flex items-center gap-2 text-xs font-bold text-blue-600 uppercase tracking-widest mb-1">
               <ShieldCheck className="w-4 h-4 text-blue-600" />
-              <span>Licensed NJ Contractor · Free Consultation</span>
+              <span>Licensed Contractor · Serving NY, NJ & Connecticut</span>
             </div>
 
             <h3 className="text-2xl font-black text-slate-900 tracking-tight">
@@ -127,12 +127,12 @@ export const EstimateModal: React.FC<EstimateModalProps> = ({
 
                 <div>
                   <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                    Township / City *
+                    City, Township & State *
                   </label>
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Princeton, NJ"
+                    placeholder="e.g. Princeton NJ, White Plains NY, Greenwich CT"
                     value={town}
                     onChange={(e) => setTown(e.target.value)}
                     className="w-full bg-slate-50 border border-slate-300 focus:border-blue-600 rounded-xl px-3.5 py-2 text-xs text-slate-900 placeholder-slate-400 focus:outline-none transition-colors"

@@ -252,7 +252,7 @@ export const HeroReviewsSection: React.FC<HeroReviewsSectionProps> = ({ onOpenEs
               <span>Ready for the 5-Star Vasquez Standard on Your Home?</span>
             </div>
             <p className="text-xs text-slate-300 mt-0.5">
-              All 10 trades performed under one contract. Fully licensed, bonded, and insured in New Jersey.
+              All 10 trades performed under one contract. Fully licensed, bonded, and insured across NY, NJ, and Connecticut.
             </p>
           </div>
 

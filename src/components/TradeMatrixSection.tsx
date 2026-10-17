@@ -297,7 +297,7 @@ export const TradeMatrixSection: React.FC<TradeMatrixSectionProps> = ({
 
             {/* Subtitle */}
             <p className="mt-4 text-blue-100/90 text-sm sm:text-base md:text-lg max-w-2xl leading-relaxed font-normal">
-              No juggling separate subcontractors. Select any trade to inspect our architectural specifications, New Jersey building code compliance, and certified materials.
+              No juggling separate subcontractors. Select any trade to inspect our architectural specifications, NY, NJ, and CT building code compliance, and certified materials.
             </p>
           </div>
 
@@ -305,7 +305,7 @@ export const TradeMatrixSection: React.FC<TradeMatrixSectionProps> = ({
           <div className="flex flex-wrap lg:flex-col items-start lg:items-end gap-2.5 shrink-0">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-blue-950/90 border border-blue-500/40 text-xs font-bold text-white shadow-md backdrop-blur-md">
               <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span>NJ HIC Lic #13VH13437500</span>
+              <span>Serving NY, NJ & Connecticut</span>
             </div>
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-blue-950/90 border border-blue-500/40 text-xs font-bold text-white shadow-md backdrop-blur-md">
               <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0" />

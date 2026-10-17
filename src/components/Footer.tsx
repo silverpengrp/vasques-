@@ -40,7 +40,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenEstimateModal, onSelectSer
             </div>
 
             <p className="text-xs text-slate-400 leading-relaxed max-w-sm">
-              We build, remodel, and elevate homes across New Jersey with master craftsmanship. Decks, patios, roofing, plumbing, remodeling, additions, masonry, painting, pressure washing, and tree trimming.
+              We build, remodel, and elevate homes across New York, New Jersey, and Connecticut with master craftsmanship. Decks, patios, roofing, plumbing, remodeling, additions, masonry, painting, pressure washing, and tree trimming.
             </p>
 
             <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-3.5 max-w-sm space-y-1.5 text-xs">
@@ -49,7 +49,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenEstimateModal, onSelectSer
                 <span>Licensed & Fully Insured Contractor LLC</span>
               </div>
               <p className="text-[11px] text-slate-400">
-                General Liability Insurance • Workman's Compensation • NJ HIC Registered
+                General Liability Insurance • Workman's Compensation • Serving NY, NJ & CT
               </p>
             </div>
           </div>
@@ -95,7 +95,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenEstimateModal, onSelectSer
             <div className="space-y-2 text-xs text-slate-400 pt-1">
               <div className="flex items-center gap-2">
                 <MapPin className="w-3.5 h-3.5 text-blue-400 shrink-0" />
-                <span>Serving New Jersey (Area Code 609 & Surrounding)</span>
+                <span>Serving NY, NJ & Connecticut (Tri-State Area)</span>
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-3.5 h-3.5 text-blue-400 shrink-0" />

@@ -29,16 +29,18 @@ function saveHeroImagePlugin(): Plugin {
             fs.mkdirSync(publicDir, { recursive: true });
           }
 
-          // Permanently save to both saved_hero.png and 22222-Photoroom.png
+          // Permanently save to vasquez_white_jumper_hero.png, saved_hero.png and 22222-Photoroom.png
+          fs.writeFileSync(path.join(publicDir, 'vasquez_white_jumper_hero.png'), buffer);
           fs.writeFileSync(path.join(publicDir, 'saved_hero.png'), buffer);
           fs.writeFileSync(path.join(publicDir, '22222-Photoroom.png'), buffer);
           
+          const timestamp = Date.now();
           res.setHeader('Content-Type', 'application/json');
           res.statusCode = 200;
           res.end(JSON.stringify({ 
             success: true, 
             message: 'Image saved permanently to server storage',
-            url: '/22222-Photoroom.png?t=' + Date.now()
+            url: `/vasquez_white_jumper_hero.png?t=${timestamp}`
           }));
         } catch (err: any) {
           res.statusCode = 500;

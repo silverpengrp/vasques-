@@ -93,7 +93,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialService }
                 <MapPin className="w-5 h-5 text-cyan-400 shrink-0 mt-0.5" />
                 <div>
                   <h4 className="text-xs font-bold text-white uppercase">Headquarters & Service Radius</h4>
-                  <p className="text-xs text-blue-200/90 mt-0.5">Serving all of New Jersey (Area Code 609, 732, 856, and surrounding townships)</p>
+                  <p className="text-xs text-blue-200/90 mt-0.5">Serving NY, NJ and Connecticut (Full Tri-State residential & commercial coverage)</p>
                 </div>
               </div>
 
@@ -109,8 +109,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialService }
               <div className="flex items-start gap-3 pt-3 border-t border-blue-800/60">
                 <ShieldCheck className="w-5 h-5 text-cyan-400 shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-xs font-bold text-white uppercase">NJ Contractor Entity</h4>
-                  <p className="text-xs text-blue-200/90 mt-0.5">Vasquez Home Improvement Contractor LLC · Licensed & Fully Insured</p>
+                  <h4 className="text-xs font-bold text-white uppercase">Tri-State Contractor Entity</h4>
+                  <p className="text-xs text-blue-200/90 mt-0.5">Vasquez Home Improvement Contractor LLC · Serving NY, NJ & CT · Fully Insured</p>
                 </div>
               </div>
             </div>
@@ -190,12 +190,12 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialService }
 
                   <div>
                     <label className="block text-xs font-bold text-blue-200 uppercase tracking-wider mb-1.5">
-                      NJ City / Township *
+                      City, Township & State *
                     </label>
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Princeton, Hamilton, Toms River"
+                      placeholder="e.g. Princeton NJ, White Plains NY, or Stamford CT"
                       value={formData.city}
                       onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                       className="w-full bg-[#071630] border border-blue-700/60 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-blue-300/40 focus:outline-none transition-colors"

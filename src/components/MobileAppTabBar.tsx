@@ -163,7 +163,7 @@ export const MobileAppTabBar: React.FC<MobileAppTabBarProps> = ({
                 <VasquezLogoIcon className="w-9 h-9" />
                 <div>
                   <h4 className="text-sm font-black uppercase text-white">Vasquez HIC App</h4>
-                  <p className="text-[11px] text-cyan-400 font-mono">NJ Lic #13VH13437500</p>
+                  <p className="text-[11px] text-cyan-400 font-mono">Lic #13VH13437500 · Serving NY, NJ & CT</p>
                 </div>
               </div>
               <button 
@@ -209,7 +209,7 @@ export const MobileAppTabBar: React.FC<MobileAppTabBarProps> = ({
                 className="p-3 rounded-2xl bg-slate-800/80 border border-slate-700 flex items-center gap-2.5 hover:bg-slate-700 text-left"
               >
                 <MapPin className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>NJ Coverage</span>
+                <span>NY, NJ & CT</span>
               </button>
             </div>
 
