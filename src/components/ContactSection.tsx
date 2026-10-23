@@ -1,12 +1,27 @@
 import React, { useState } from 'react';
 import { Phone, MapPin, Clock, ShieldCheck, Send, CheckCircle2 } from 'lucide-react';
 import { SERVICES_DATA } from '../data/servicesData';
+import { useLanguage } from '../context/LanguageContext';
 
 interface ContactSectionProps {
   initialService?: string;
 }
 
+const SERVICE_TITLES_ES: Record<string, string> = {
+  'Decks': 'Terrazas y Patios',
+  'Patios': 'Patios y Adoquines',
+  'Plumbing': 'Plomería Residencial',
+  'Remodeling': 'Remodelación de Cocinas y Baños',
+  'Additions': 'Ampliaciones y Estructuras',
+  'Masonry': 'Albañilería y Piedra',
+  'Roofing': 'Techados y Techos',
+  'Painting': 'Pintura Interior y Exterior',
+  'Pressure Washing': 'Lavado a Presión Comercial',
+  'Tree Trimming': 'Poda y Cuidado de Árboles'
+};
+
 export const ContactSection: React.FC<ContactSectionProps> = ({ initialService }) => {
+  const { t, lang } = useLanguage();
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
@@ -14,7 +29,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialService }
     email: '',
     city: '',
     service: initialService || 'Decks',
-    timeframe: 'As soon as possible',
+    timeframe: 'soon',
     description: ''
   });
 
@@ -46,13 +61,13 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialService }
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-900/80 border border-blue-400/50 text-xs font-bold text-cyan-300 uppercase tracking-widest mb-3 shadow-inner">
-            <span>Direct Contractor Access</span>
+            <span>{t('contact.kicker')}</span>
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight">
-            Schedule Your Free On-Site Consultation
+            {t('contact.title')}
           </h2>
           <p className="mt-3 text-blue-100/90 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
-            No high-pressure salespeople. You speak directly with our master builder who reviews your plans and provides a guaranteed written estimate.
+            {t('contact.desc')}
           </p>
         </div>
 
@@ -65,7 +80,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialService }
             <div className="bg-[#0b1c3d]/95 border border-blue-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden backdrop-blur-xl text-white">
               <div className="relative z-10">
                 <span className="text-xs font-black text-cyan-400 uppercase tracking-widest block mb-1">
-                  Master Contractor Hotline
+                  {t('contact.hotlineTitle')}
                 </span>
                 <a
                   href="tel:+16094818197"
@@ -74,7 +89,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialService }
                   +1 (609) 481-8197
                 </a>
                 <p className="text-xs text-blue-100/90 leading-relaxed mb-6">
-                  Call or text for immediate scheduling. Speak with ownership directly regarding blueprints, emergency roof tarping, plumbing leaks, or new deck consultations.
+                  {t('contact.hotlineDesc')}
                 </p>
 
                 <a
@@ -82,7 +97,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialService }
                   className="w-full py-3.5 bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-black text-xs uppercase tracking-wider rounded-2xl shadow-lg shadow-blue-600/30 transition-all flex items-center justify-center gap-2 border border-cyan-400/40 active:scale-95"
                 >
                   <Phone className="w-4 h-4 text-cyan-200" />
-                  <span>Call +1 (609) 481-8197 Now</span>
+                  <span>{t('contact.hotlineBtn')}</span>
                 </a>
               </div>
             </div>
@@ -92,25 +107,25 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialService }
               <div className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-cyan-400 shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-xs font-bold text-white uppercase">Headquarters & Service Radius</h4>
-                  <p className="text-xs text-blue-200/90 mt-0.5">Serving NY, NJ and Connecticut (Full Tri-State residential & commercial coverage)</p>
+                  <h4 className="text-xs font-bold text-white uppercase">{t('contact.hqTitle')}</h4>
+                  <p className="text-xs text-blue-200/90 mt-0.5">{t('contact.hqDesc')}</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-3 pt-3 border-t border-blue-800/60">
                 <Clock className="w-5 h-5 text-cyan-400 shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-xs font-bold text-white uppercase">Operating Hours</h4>
-                  <p className="text-xs text-blue-200/90 mt-0.5">Monday – Saturday: 7:00 AM – 7:00 PM</p>
-                  <p className="text-[11px] text-cyan-300 font-bold mt-0.5">24/7 Priority Emergency Storm & Roof Repair</p>
+                  <h4 className="text-xs font-bold text-white uppercase">{t('contact.hoursTitle')}</h4>
+                  <p className="text-xs text-blue-200/90 mt-0.5">{t('contact.hoursDesc')}</p>
+                  <p className="text-[11px] text-cyan-300 font-bold mt-0.5">{t('contact.emergencyDesc')}</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-3 pt-3 border-t border-blue-800/60">
                 <ShieldCheck className="w-5 h-5 text-cyan-400 shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-xs font-bold text-white uppercase">Tri-State Contractor Entity</h4>
-                  <p className="text-xs text-blue-200/90 mt-0.5">Vasquez Home Improvement Contractor LLC · Serving NY, NJ & CT · Fully Insured</p>
+                  <h4 className="text-xs font-bold text-white uppercase">{t('contact.entityTitle')}</h4>
+                  <p className="text-xs text-blue-200/90 mt-0.5">{t('contact.entityDesc')}</p>
                 </div>
               </div>
             </div>
@@ -124,35 +139,45 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialService }
                 <div className="w-16 h-16 rounded-full bg-emerald-950/80 border border-emerald-400 flex items-center justify-center text-emerald-300 mb-4 shadow-lg shadow-emerald-900/40">
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
-                <h3 className="text-2xl font-black text-white">Estimate Request Received!</h3>
+                <h3 className="text-2xl font-black text-white">{t('contact.successTitle')}</h3>
                 <p className="mt-2 text-blue-100 text-sm max-w-md">
-                  Thank you, <strong className="text-white">{formData.fullName || 'Neighbor'}</strong>. Our master builder will review your project details and reach out within 2 hours at <span className="text-cyan-300 font-mono font-bold">{formData.phone || 'your phone'}</span>.
+                  {lang === 'es' ? (
+                    <>
+                      Gracias, <strong className="text-white">{formData.fullName || 'Estimado Propietario'}</strong>. {t('contact.successMessage')}{' '}
+                      <span className="text-cyan-300 font-mono font-bold">{formData.phone || 'su teléfono'}</span>.
+                    </>
+                  ) : (
+                    <>
+                      Thank you, <strong className="text-white">{formData.fullName || 'Neighbor'}</strong>. {t('contact.successMessage')} at{' '}
+                      <span className="text-cyan-300 font-mono font-bold">{formData.phone || 'your phone'}</span>.
+                    </>
+                  )}
                 </p>
                 <button
                   onClick={() => setFormSubmitted(false)}
                   className="mt-6 px-6 py-2.5 bg-blue-900/60 border border-blue-600/50 hover:bg-blue-800 text-white text-xs font-bold rounded-xl transition-colors cursor-pointer shadow-sm"
                 >
-                  Submit Another Project Inquiry
+                  {t('contact.submitAnother')}
                 </button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
                 <h3 className="text-xl font-black text-white mb-2">
-                  Request Your Free Consultation
+                  {t('contact.formTitle')}
                 </h3>
                 <p className="text-xs text-blue-200/90 mb-6">
-                  Fill in your property location and project requirements. We respect your privacy and never sell information.
+                  {t('contact.formDesc')}
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-bold text-blue-200 uppercase tracking-wider mb-1.5">
-                      Your Full Name *
+                      {t('contact.nameLabel')}
                     </label>
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Michael Rossi"
+                      placeholder={t('contact.namePlaceholder')}
                       value={formData.fullName}
                       onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                       className="w-full bg-[#071630] border border-blue-700/60 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-blue-300/40 focus:outline-none transition-colors"
@@ -161,7 +186,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialService }
 
                   <div>
                     <label className="block text-xs font-bold text-blue-200 uppercase tracking-wider mb-1.5">
-                      Phone Number *
+                      {t('contact.phoneLabel')}
                     </label>
                     <input
                       type="tel"
@@ -177,7 +202,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialService }
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-bold text-blue-200 uppercase tracking-wider mb-1.5">
-                      Email Address
+                      {t('contact.emailLabel')}
                     </label>
                     <input
                       type="email"
@@ -190,12 +215,12 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialService }
 
                   <div>
                     <label className="block text-xs font-bold text-blue-200 uppercase tracking-wider mb-1.5">
-                      City, Township & State *
+                      {t('contact.townLabel')}
                     </label>
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Princeton NJ, White Plains NY, or Stamford CT"
+                      placeholder={t('contact.townPlaceholder')}
                       value={formData.city}
                       onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                       className="w-full bg-[#071630] border border-blue-700/60 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-blue-300/40 focus:outline-none transition-colors"
@@ -206,44 +231,47 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialService }
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-bold text-blue-200 uppercase tracking-wider mb-1.5">
-                      Trade Service Needed *
+                      {t('contact.serviceLabel')}
                     </label>
                     <select
                       value={formData.service}
                       onChange={(e) => setFormData({ ...formData, service: e.target.value })}
                       className="w-full bg-[#071630] border border-blue-700/60 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none transition-colors cursor-pointer"
                     >
-                      {SERVICES_DATA.map(s => (
-                        <option key={s.id} value={s.title} className="bg-slate-900 text-white">{s.title}</option>
-                      ))}
-                      <option value="Multiple Trades" className="bg-slate-900 text-white">Multiple Trades / Whole House</option>
+                      {SERVICES_DATA.map(s => {
+                        const title = lang === 'es' && SERVICE_TITLES_ES[s.title] ? SERVICE_TITLES_ES[s.title] : s.title;
+                        return (
+                          <option key={s.id} value={s.title} className="bg-slate-900 text-white">{title}</option>
+                        );
+                      })}
+                      <option value="Multiple Trades" className="bg-slate-900 text-white">{t('contact.multipleTrades')}</option>
                     </select>
                   </div>
 
                   <div>
                     <label className="block text-xs font-bold text-blue-200 uppercase tracking-wider mb-1.5">
-                      Ideal Start Timeframe
+                      {t('contact.timeframeLabel')}
                     </label>
                     <select
                       value={formData.timeframe}
                       onChange={(e) => setFormData({ ...formData, timeframe: e.target.value })}
                       className="w-full bg-[#071630] border border-blue-700/60 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none transition-colors cursor-pointer"
                     >
-                      <option value="Emergency (Next 48 Hours)" className="bg-slate-900 text-white">Emergency (Next 48 Hours)</option>
-                      <option value="Within 2-3 Weeks" className="bg-slate-900 text-white">Within 2–3 Weeks</option>
-                      <option value="Next 1-2 Months" className="bg-slate-900 text-white">Next 1–2 Months</option>
-                      <option value="Flexible / Planning Phase" className="bg-slate-900 text-white">Flexible / Planning Phase</option>
+                      <option value="emergency" className="bg-slate-900 text-white">{t('contact.timeframe.emergency')}</option>
+                      <option value="soon" className="bg-slate-900 text-white">{t('contact.timeframe.soon')}</option>
+                      <option value="medium" className="bg-slate-900 text-white">{t('contact.timeframe.medium')}</option>
+                      <option value="planning" className="bg-slate-900 text-white">{t('contact.timeframe.planning')}</option>
                     </select>
                   </div>
                 </div>
 
                 <div>
                   <label className="block text-xs font-bold text-blue-200 uppercase tracking-wider mb-1.5">
-                    Project Scope / Notes
+                    {t('contact.notesLabel')}
                   </label>
                   <textarea
                     rows={3}
-                    placeholder="Describe your vision, approximate square footage, existing conditions, or any specific materials..."
+                    placeholder={t('contact.notesPlaceholder')}
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                     className="w-full bg-[#071630] border border-blue-700/60 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 rounded-xl p-3 text-xs text-white placeholder-blue-300/40 focus:outline-none transition-colors resize-none"
@@ -255,7 +283,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ initialService }
                   className="w-full py-3.5 bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-black text-xs uppercase tracking-wider rounded-2xl shadow-lg shadow-blue-600/30 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95 border border-cyan-400/40"
                 >
                   <Send className="w-4 h-4 text-cyan-200" />
-                  <span>Send Free Estimate Request</span>
+                  <span>{t('contact.submitBtn')}</span>
                 </button>
               </form>
             )}

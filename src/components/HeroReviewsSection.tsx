@@ -10,9 +10,9 @@ import {
   Home, 
   Paintbrush, 
   PhoneCall, 
-  ArrowRight,
-  Award
+  ArrowRight
 } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 interface HeroReviewsSectionProps {
   onOpenEstimateModal?: () => void;
@@ -24,12 +24,16 @@ interface ReviewItem {
   location: string;
   county: string;
   service: string;
+  serviceEs: string;
   tradeCategory: 'all' | 'roofing' | 'decks' | 'remodeling' | 'painting';
   icon: React.ElementType;
   rating: number;
   date: string;
+  dateEs: string;
   review: string;
+  reviewEs: string;
   projectHighlight: string;
+  projectHighlightEs: string;
 }
 
 const FEATURED_REVIEWS: ReviewItem[] = [
@@ -39,12 +43,16 @@ const FEATURED_REVIEWS: ReviewItem[] = [
     location: 'Toms River, NJ',
     county: 'Ocean County',
     service: 'Custom Composite Deck & Pergola',
+    serviceEs: 'Terraza de Compuesto y Pérgola',
     tradeCategory: 'decks',
     icon: Hammer,
     rating: 5,
     date: 'Verified 2026 Project',
+    dateEs: 'Proyecto Verificado 2026',
     review: 'Carlos and his crew built a two-level composite deck with custom black aluminum railings. They arrived at 7:00 AM sharp every day, kept our yard immaculate, and finished two days ahead of schedule. Best contractor in Ocean County by far.',
-    projectHighlight: 'Completed in 5 Days · Trex Transcend Deck'
+    reviewEs: 'Carlos y su equipo construyeron una terraza de compuesto de dos niveles con barandillas de aluminio negro. Llegaron a las 7:00 AM en punto todos los días, mantuvieron el patio impecable y terminaron dos días antes de lo previsto. El mejor contratista del condado de Ocean sin duda.',
+    projectHighlight: 'Completed in 5 Days · Trex Transcend Deck',
+    projectHighlightEs: 'Terminado en 5 Días · Terraza Trex Transcend'
   },
   {
     id: 'hr-2',
@@ -52,12 +60,16 @@ const FEATURED_REVIEWS: ReviewItem[] = [
     location: 'Cherry Hill, NJ',
     county: 'Camden County',
     service: 'Full Roof Replacement & Flashing',
+    serviceEs: 'Reemplazo Completo de Techo y Sellado',
     tradeCategory: 'roofing',
     icon: Home,
     rating: 5,
     date: 'Verified 2026 Project',
+    dateEs: 'Proyecto Verificado 2026',
     review: 'We had severe storm damage on our roof. Carlos inspected it the same afternoon and gave us a clear, honest written quote. The crew completed the full tear-off and GAF Timberline shingle install in 48 hours. Zero stray nails in our driveway.',
-    projectHighlight: '50-Year Warranty · Full Storm Restoration'
+    reviewEs: 'Tuvimos graves daños por tormenta en nuestro techo. Carlos lo inspeccionó esa misma tarde y nos dio un presupuesto por escrito claro y honesto. El equipo completó la remoción total y la instalación de tejas GAF en 48 horas. Cero clavos sueltos en la entrada.',
+    projectHighlight: '50-Year Warranty · Full Storm Restoration',
+    projectHighlightEs: 'Garantía de 50 Años · Restauración por Tormenta'
   },
   {
     id: 'hr-3',
@@ -65,12 +77,16 @@ const FEATURED_REVIEWS: ReviewItem[] = [
     location: 'Princeton, NJ',
     county: 'Mercer County',
     service: 'Kitchen & Bath Remodeling',
+    serviceEs: 'Remodelación de Cocina y Baño',
     tradeCategory: 'remodeling',
     icon: Sparkles,
     rating: 5,
     date: 'Verified 2026 Project',
+    dateEs: 'Proyecto Verificado 2026',
     review: 'Having Vasquez handle both the plumbing, tile masonry, and custom cabinetry under one contract saved us thousands and endless stress. Carlos was on site inspecting every detail daily. True master craftsmanship.',
-    projectHighlight: 'Waterfall Quartz Island & Custom Vanities'
+    reviewEs: 'Haber contratado a Vasquez para encargarse de la plomería, los azulejos y los gabinetes a medida bajo un solo contrato nos ahorró miles de dólares y mucho estrés. Carlos estuvo en la obra inspeccionando cada detalle a diario. Verdadera maestría.',
+    projectHighlight: 'Waterfall Quartz Island & Custom Vanities',
+    projectHighlightEs: 'Isla de Cuarzo Cascada y Tocadores a Medida'
   },
   {
     id: 'hr-4',
@@ -78,16 +94,21 @@ const FEATURED_REVIEWS: ReviewItem[] = [
     location: 'Hoboken / Jersey City, NJ',
     county: 'Hudson County',
     service: 'Exterior Masonry & Painting',
+    serviceEs: 'Albañilería y Pintura Exterior',
     tradeCategory: 'painting',
     icon: Paintbrush,
     rating: 5,
     date: 'Verified 2026 Project',
+    dateEs: 'Proyecto Verificado 2026',
     review: 'Repointed our 1920s brick foundation and gave our exterior a modern paint makeover. Neighbors stop and ask who did the work constantly. Straightforward pricing, no surprise fees, and courteous crew.',
-    projectHighlight: 'Historic Brick Repointing & Full Exterior Coat'
+    reviewEs: 'Restauraron los cimientos de ladrillo de nuestra casa de 1920 y le dieron a la fachada una renovación moderna con pintura de alta calidad. Los vecinos se detienen constantemente a preguntar quién hizo el trabajo. Precios claros, sin costos sorpresa y un equipo respetuoso.',
+    projectHighlight: 'Historic Brick Repointing & Full Exterior Coat',
+    projectHighlightEs: 'Rejuntado de Ladrillos y Pintura Exterior Completa'
   }
 ];
 
 export const HeroReviewsSection: React.FC<HeroReviewsSectionProps> = ({ onOpenEstimateModal }) => {
+  const { t, lang } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'roofing' | 'decks' | 'remodeling' | 'painting'>('all');
 
   const filteredReviews = selectedCategory === 'all' 
@@ -113,17 +134,15 @@ export const HeroReviewsSection: React.FC<HeroReviewsSectionProps> = ({ onOpenEs
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-
-
         {/* SECTION HEADER & QUICK TRADE FILTER */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>
             <div className="text-xs font-black uppercase tracking-widest text-cyan-400 mb-1 flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Real Homeowner Testimonials</span>
+              <span>{t('reviews.kicker')}</span>
             </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight">
-              Verified 5-Star Craftsmanship in Action
+              {t('reviews.title')}
             </h2>
           </div>
 
@@ -137,7 +156,7 @@ export const HeroReviewsSection: React.FC<HeroReviewsSectionProps> = ({ onOpenEs
                   : 'bg-slate-800/70 text-slate-300 hover:text-white hover:bg-slate-700 border border-slate-700'
               }`}
             >
-              All Reviews
+              {t('reviews.filter.all')}
             </button>
             <button
               onClick={() => setSelectedCategory('decks')}
@@ -147,7 +166,7 @@ export const HeroReviewsSection: React.FC<HeroReviewsSectionProps> = ({ onOpenEs
                   : 'bg-slate-800/70 text-slate-300 hover:text-white hover:bg-slate-700 border border-slate-700'
               }`}
             >
-              Decks & Patios
+              {t('reviews.filter.decks')}
             </button>
             <button
               onClick={() => setSelectedCategory('roofing')}
@@ -157,7 +176,7 @@ export const HeroReviewsSection: React.FC<HeroReviewsSectionProps> = ({ onOpenEs
                   : 'bg-slate-800/70 text-slate-300 hover:text-white hover:bg-slate-700 border border-slate-700'
               }`}
             >
-              Roofing
+              {t('reviews.filter.roofing')}
             </button>
             <button
               onClick={() => setSelectedCategory('remodeling')}
@@ -167,7 +186,7 @@ export const HeroReviewsSection: React.FC<HeroReviewsSectionProps> = ({ onOpenEs
                   : 'bg-slate-800/70 text-slate-300 hover:text-white hover:bg-slate-700 border border-slate-700'
               }`}
             >
-              Remodeling
+              {t('reviews.filter.remodeling')}
             </button>
             <button
               onClick={() => setSelectedCategory('painting')}
@@ -177,7 +196,7 @@ export const HeroReviewsSection: React.FC<HeroReviewsSectionProps> = ({ onOpenEs
                   : 'bg-slate-800/70 text-slate-300 hover:text-white hover:bg-slate-700 border border-slate-700'
               }`}
             >
-              Masonry & Paint
+              {t('reviews.filter.painting')}
             </button>
           </div>
         </div>
@@ -186,6 +205,10 @@ export const HeroReviewsSection: React.FC<HeroReviewsSectionProps> = ({ onOpenEs
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
           {filteredReviews.map((review) => {
             const TradeIcon = review.icon;
+            const reviewText = lang === 'es' ? review.reviewEs : review.review;
+            const serviceLabel = lang === 'es' ? review.serviceEs : review.service;
+            const highlightText = lang === 'es' ? review.projectHighlightEs : review.projectHighlight;
+
             return (
               <div
                 key={review.id}
@@ -204,13 +227,13 @@ export const HeroReviewsSection: React.FC<HeroReviewsSectionProps> = ({ onOpenEs
                     </div>
                     <div className="flex items-center gap-1 text-[11px] font-bold text-cyan-400 bg-cyan-950/60 px-2 py-0.5 rounded-lg border border-cyan-800/50">
                       <TradeIcon className="w-3 h-3" />
-                      <span>{review.service.split('&')[0]}</span>
+                      <span className="truncate max-w-[120px]">{serviceLabel}</span>
                     </div>
                   </div>
 
                   {/* Customer Review Quote */}
                   <p className="text-slate-200 text-xs sm:text-sm leading-relaxed italic mb-4">
-                    "{review.review}"
+                    "{reviewText}"
                   </p>
                 </div>
 
@@ -229,13 +252,13 @@ export const HeroReviewsSection: React.FC<HeroReviewsSectionProps> = ({ onOpenEs
 
                     <div className="flex items-center gap-1 text-[10px] font-bold text-emerald-400 bg-emerald-950/60 px-2 py-1 rounded-md border border-emerald-800/40">
                       <CheckCircle2 className="w-3 h-3 text-emerald-400" />
-                      <span>Verified</span>
+                      <span>{t('reviews.verified')}</span>
                     </div>
                   </div>
 
                   {/* Highlight pill */}
                   <div className="text-[10px] text-slate-400 font-mono bg-slate-950/80 px-2 py-1 rounded-lg border border-slate-800 text-center">
-                    {review.projectHighlight}
+                    {highlightText}
                   </div>
                 </div>
 
@@ -249,10 +272,10 @@ export const HeroReviewsSection: React.FC<HeroReviewsSectionProps> = ({ onOpenEs
           <div>
             <div className="text-sm font-black text-white flex items-center justify-center sm:justify-start gap-2">
               <ShieldCheck className="w-4 h-4 text-cyan-400" />
-              <span>Ready for the 5-Star Vasquez Standard on Your Home?</span>
+              <span>{t('reviews.cta.title')}</span>
             </div>
             <p className="text-xs text-slate-300 mt-0.5">
-              All 10 trades performed under one contract. Fully licensed, bonded, and insured across NY, NJ, and Connecticut.
+              {t('reviews.cta.desc')}
             </p>
           </div>
 
@@ -262,7 +285,7 @@ export const HeroReviewsSection: React.FC<HeroReviewsSectionProps> = ({ onOpenEs
               className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold transition-all flex items-center gap-2 border border-slate-600"
             >
               <PhoneCall className="w-3.5 h-3.5 text-blue-400" />
-              <span>(609) 481-8197</span>
+              <span>{t('reviews.cta.call')}</span>
             </a>
 
             {onOpenEstimateModal && (
@@ -270,7 +293,7 @@ export const HeroReviewsSection: React.FC<HeroReviewsSectionProps> = ({ onOpenEs
                 onClick={onOpenEstimateModal}
                 className="px-4 py-2 bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg shadow-blue-600/30 transition-all flex items-center gap-1.5 border border-blue-400/40 cursor-pointer"
               >
-                <span>Free Estimate</span>
+                <span>{t('reviews.cta.btn')}</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             )}

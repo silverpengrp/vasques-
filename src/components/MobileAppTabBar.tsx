@@ -7,9 +7,7 @@ import {
   FileText,
   Star,
   MapPin,
-  MessageSquare,
-  X,
-  Compass
+  X
 } from 'lucide-react';
 import { VasquezLogoIcon } from './VasquezLogoIcon';
 import { useLanguage } from '../context/LanguageContext';
@@ -20,10 +18,9 @@ interface MobileAppTabBarProps {
 }
 
 export const MobileAppTabBar: React.FC<MobileAppTabBarProps> = ({
-  onOpenEstimateModal,
-  onSelectService
+  onOpenEstimateModal
 }) => {
-  const { lang, t } = useLanguage();
+  const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState<'home' | 'work' | 'trades' | 'estimate'>('home');
   const [sheetOpen, setSheetOpen] = useState(false);
 
@@ -87,7 +84,7 @@ export const MobileAppTabBar: React.FC<MobileAppTabBarProps> = ({
             <div className={`p-1 rounded-xl transition-all ${activeTab === 'home' ? 'bg-blue-600/25 text-cyan-300' : ''}`}>
               <Home className="w-5 h-5 stroke-[2.2]" />
             </div>
-            <span className="text-[10px] tracking-tight mt-0.5">{lang === 'es' ? 'Inicio' : 'Home'}</span>
+            <span className="text-[10px] tracking-tight mt-0.5">{t('tab.home')}</span>
           </button>
 
           {/* TAB 2: BEFORE & AFTER (WORK) */}
@@ -102,7 +99,7 @@ export const MobileAppTabBar: React.FC<MobileAppTabBarProps> = ({
             <div className={`p-1 rounded-xl transition-all ${activeTab === 'work' ? 'bg-blue-600/25 text-cyan-300' : ''}`}>
               <Sparkles className="w-5 h-5 stroke-[2.2]" />
             </div>
-            <span className="text-[10px] tracking-tight mt-0.5">{lang === 'es' ? 'Trabajos' : 'Our Work'}</span>
+            <span className="text-[10px] tracking-tight mt-0.5">{t('tab.work')}</span>
             <span className="absolute top-1 right-2 w-1.5 h-1.5 rounded-full bg-cyan-400" />
           </button>
 
@@ -114,7 +111,7 @@ export const MobileAppTabBar: React.FC<MobileAppTabBarProps> = ({
               aria-label="Call Vasquez Home Improvement Hotline"
             >
               <Phone className="w-5 h-5 text-white animate-pulse" />
-              <span className="text-[8px] font-black uppercase tracking-tighter mt-0.5">{lang === 'es' ? 'Llamar' : 'Call'}</span>
+              <span className="text-[8px] font-black uppercase tracking-tighter mt-0.5">{t('tab.call')}</span>
             </a>
           </div>
 
@@ -130,7 +127,7 @@ export const MobileAppTabBar: React.FC<MobileAppTabBarProps> = ({
             <div className={`p-1 rounded-xl transition-all ${activeTab === 'trades' ? 'bg-blue-600/25 text-cyan-300' : ''}`}>
               <Layers className="w-5 h-5 stroke-[2.2]" />
             </div>
-            <span className="text-[10px] tracking-tight mt-0.5">{lang === 'es' ? 'Oficios' : 'Trades'}</span>
+            <span className="text-[10px] tracking-tight mt-0.5">{t('tab.trades')}</span>
           </button>
 
           {/* TAB 4: FREE ESTIMATE (MODAL TRIGGER) */}
@@ -141,7 +138,7 @@ export const MobileAppTabBar: React.FC<MobileAppTabBarProps> = ({
             <div className="p-1 rounded-xl bg-blue-500/15 border border-blue-400/40 text-cyan-300 shadow-sm">
               <FileText className="w-5 h-5 stroke-[2.2]" />
             </div>
-            <span className="text-[10px] font-bold tracking-tight mt-0.5">{lang === 'es' ? 'Presupuesto' : 'Estimate'}</span>
+            <span className="text-[10px] font-bold tracking-tight mt-0.5">{t('tab.estimate')}</span>
           </button>
 
         </div>
@@ -164,8 +161,8 @@ export const MobileAppTabBar: React.FC<MobileAppTabBarProps> = ({
               <div className="flex items-center gap-3">
                 <VasquezLogoIcon className="w-9 h-9" />
                 <div>
-                  <h4 className="text-sm font-black uppercase text-white">Vasquez HIC App</h4>
-                  <p className="text-[11px] text-cyan-400 font-mono">Lic #13VH13437500 · Serving NY, NJ & CT</p>
+                  <h4 className="text-sm font-black uppercase text-white">{t('tab.sheetTitle')}</h4>
+                  <p className="text-[11px] text-cyan-400 font-mono">{t('brand.entity')}</p>
                 </div>
               </div>
               <button 
@@ -182,14 +179,14 @@ export const MobileAppTabBar: React.FC<MobileAppTabBarProps> = ({
                 className="p-3 rounded-2xl bg-slate-800/80 border border-slate-700 flex items-center gap-2.5 hover:bg-slate-700 text-left"
               >
                 <Sparkles className="w-4 h-4 text-cyan-400 shrink-0" />
-                <span>Before & After</span>
+                <span>{t('nav.work')}</span>
               </button>
               <button
                 onClick={() => scrollTo('services-section', 'trades')}
                 className="p-3 rounded-2xl bg-slate-800/80 border border-slate-700 flex items-center gap-2.5 hover:bg-slate-700 text-left"
               >
                 <Layers className="w-4 h-4 text-blue-400 shrink-0" />
-                <span>10 Master Trades</span>
+                <span>{t('nav.trades')}</span>
               </button>
               <button
                 onClick={() => {
@@ -200,7 +197,7 @@ export const MobileAppTabBar: React.FC<MobileAppTabBarProps> = ({
                 className="p-3 rounded-2xl bg-slate-800/80 border border-slate-700 flex items-center gap-2.5 hover:bg-slate-700 text-left"
               >
                 <Star className="w-4 h-4 text-amber-400 shrink-0 fill-amber-400" />
-                <span>5-Star Reviews</span>
+                <span>{t('tab.reviews')}</span>
               </button>
               <button
                 onClick={() => {
@@ -211,7 +208,7 @@ export const MobileAppTabBar: React.FC<MobileAppTabBarProps> = ({
                 className="p-3 rounded-2xl bg-slate-800/80 border border-slate-700 flex items-center gap-2.5 hover:bg-slate-700 text-left"
               >
                 <MapPin className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>NY, NJ & CT</span>
+                <span>{t('tab.coverage')}</span>
               </button>
             </div>
 
@@ -230,7 +227,7 @@ export const MobileAppTabBar: React.FC<MobileAppTabBarProps> = ({
                 }}
                 className="flex-1 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-black uppercase text-center flex items-center justify-center gap-1.5 shadow-md"
               >
-                <span>Free Estimate</span>
+                <span>{t('nav.estimate')}</span>
               </button>
             </div>
           </div>

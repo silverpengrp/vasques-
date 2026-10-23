@@ -13,10 +13,10 @@ import {
   Maximize2,
   CheckCircle2,
   Sparkles,
-  Layers,
   X,
   Ruler
 } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 interface AllBeforeAfterGalleryProps {
   onOpenEstimateModalWithService?: (serviceName: string) => void;
@@ -25,6 +25,7 @@ interface AllBeforeAfterGalleryProps {
 export const AllBeforeAfterGallery: React.FC<AllBeforeAfterGalleryProps> = ({
   onOpenEstimateModalWithService
 }) => {
+  const { t, lang } = useLanguage();
   const [selectedFilter, setSelectedFilter] = useState<'all' | 'deck' | 'remodel' | 'roof'>('all');
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [wipePos, setWipePos] = useState<number>(50); // percentage 0 to 100%
@@ -35,10 +36,10 @@ export const AllBeforeAfterGallery: React.FC<AllBeforeAfterGalleryProps> = ({
 
   // Exact 4 filters requested
   const FILTER_OPTIONS: { id: 'all' | 'deck' | 'remodel' | 'roof'; label: string }[] = [
-    { id: 'all', label: 'All Projects' },
-    { id: 'deck', label: 'Decks & Patios' },
-    { id: 'remodel', label: 'Kitchen & Bath' },
-    { id: 'roof', label: 'Roofing' }
+    { id: 'all', label: t('gallery.filter.all') },
+    { id: 'deck', label: t('gallery.filter.deck') },
+    { id: 'remodel', label: t('gallery.filter.remodel') },
+    { id: 'roof', label: t('gallery.filter.roof') }
   ];
 
   // Filtered array
@@ -127,13 +128,13 @@ export const AllBeforeAfterGallery: React.FC<AllBeforeAfterGalleryProps> = ({
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-900/80 border border-blue-400/50 text-xs font-bold text-cyan-300 uppercase tracking-widest mb-3 shadow-inner">
               <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Verified New Jersey Transformations</span>
+              <span>{t('gallery.kicker')}</span>
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight">
-              Master Craftsmanship In Action
+              {t('gallery.title')}
             </h2>
             <p className="mt-2 text-blue-100/90 text-sm sm:text-base max-w-2xl leading-relaxed">
-              Inspect the clean lines, structural longevity, and code-compliant installations delivered across Mercer, Middlesex, Ocean, and Monmouth counties.
+              {t('gallery.desc')}
             </p>
           </div>
 
@@ -165,7 +166,13 @@ export const AllBeforeAfterGallery: React.FC<AllBeforeAfterGalleryProps> = ({
             <div>
               <div className="flex items-center gap-2 text-xs">
                 <span className="px-2.5 py-0.5 rounded-full font-black text-[11px] uppercase tracking-wider bg-blue-900/80 text-cyan-300 border border-blue-500/40">
-                  {activeProject.category}
+                  {lang === 'es' && activeProject.category === 'Decks & Patios' 
+                    ? 'Terrazas y Patios' 
+                    : lang === 'es' && activeProject.category === 'Kitchen & Bath'
+                    ? 'Cocinas y Baños'
+                    : lang === 'es' && activeProject.category === 'Roofing'
+                    ? 'Techados'
+                    : activeProject.category}
                 </span>
                 <span className="text-blue-400">·</span>
                 <span className="flex items-center gap-1 text-blue-200 font-medium">
@@ -173,7 +180,9 @@ export const AllBeforeAfterGallery: React.FC<AllBeforeAfterGalleryProps> = ({
                   <span>{activeProject.location}</span>
                 </span>
                 <span className="text-blue-400">·</span>
-                <span className="text-cyan-300 font-semibold px-2 py-0.5 rounded-md bg-blue-950/80 border border-blue-700/60 text-[11px]">{activeProject.badge}</span>
+                <span className="text-cyan-300 font-semibold px-2 py-0.5 rounded-md bg-blue-950/80 border border-blue-700/60 text-[11px]">
+                  {lang === 'es' && activeProject.badge === 'Master Craft' ? 'Acabado Maestro' : activeProject.badge}
+                </span>
               </div>
               <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tight mt-1">
                 {activeProject.title}
@@ -204,7 +213,7 @@ export const AllBeforeAfterGallery: React.FC<AllBeforeAfterGalleryProps> = ({
               <button
                 onClick={() => setActiveModalProject(activeProject)}
                 className="ml-1 p-2 rounded-xl bg-blue-900/70 hover:bg-blue-600 text-blue-200 hover:text-white transition-colors cursor-pointer border border-blue-600/40"
-                title="Inspect Fullscreen"
+                title={t('gallery.fullInspect')}
               >
                 <Maximize2 className="w-4 h-4" />
               </button>
@@ -213,11 +222,6 @@ export const AllBeforeAfterGallery: React.FC<AllBeforeAfterGalleryProps> = ({
 
           {/* 
             INTERACTIVE BEFORE & AFTER SLIDER CANVAS:
-            The slider button moves BOTH images in unison:
-            - Left image (BEFORE): width extends from left edge to the slider handle (width: wipePos%)
-            - Right image (AFTER): width extends from the slider handle to the right edge (width: 100 - wipePos%)
-            Both images are sized 100% of the parent frame and anchored to their respective side,
-            so as the user moves the button, BOTH images actively reveal/retract in tandem!
           */}
           <div className="my-6">
             <div
@@ -232,10 +236,6 @@ export const AllBeforeAfterGallery: React.FC<AllBeforeAfterGalleryProps> = ({
                 className="absolute inset-y-0 left-0 overflow-hidden pointer-events-none z-10"
                 style={{ width: `${wipePos}%` }}
               >
-                {/* 
-                  Inner Image container with full 100% parent container width (100cqw / 100% of wipeContainerRef),
-                  keeping the perspective and layout of the before picture perfectly aligned and moving dynamically.
-                */}
                 <img
                   src={activeProject.beforeImg}
                   alt={`${activeProject.title} - Condition Before Renovation`}
@@ -247,7 +247,7 @@ export const AllBeforeAfterGallery: React.FC<AllBeforeAfterGalleryProps> = ({
                 {/* Floating Left Tag */}
                 <div className="absolute top-4 left-4 z-30 pointer-events-none">
                   <span className="px-3 py-1 rounded-md bg-slate-950/90 backdrop-blur-md border border-rose-500/60 text-[11px] font-black uppercase tracking-wider text-rose-300 shadow-md">
-                    Before Renovation
+                    {t('gallery.before')}
                   </span>
                 </div>
               </div>
@@ -257,9 +257,6 @@ export const AllBeforeAfterGallery: React.FC<AllBeforeAfterGalleryProps> = ({
                 className="absolute inset-y-0 right-0 overflow-hidden pointer-events-none z-0"
                 style={{ width: `${100 - wipePos}%` }}
               >
-                {/* 
-                  Inner Image container aligned to the right side of the parent canvas
-                */}
                 <img
                   src={activeProject.afterImg}
                   alt={`${activeProject.title} - Completed Master Result`}
@@ -271,12 +268,12 @@ export const AllBeforeAfterGallery: React.FC<AllBeforeAfterGalleryProps> = ({
                 {/* Floating Right Tag */}
                 <div className="absolute top-4 right-4 z-30 pointer-events-none">
                   <span className="px-3 py-1 rounded-md bg-blue-600/95 backdrop-blur-md border border-blue-400 text-[11px] font-black uppercase tracking-wider text-white shadow-md">
-                    Vasquez Finished Craft
+                    {t('gallery.after')}
                   </span>
                 </div>
               </div>
 
-              {/* Split Line Wipe Divider: Connects and moves between BOTH images */}
+              {/* Split Line Wipe Divider */}
               <div
                 className="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize z-30 shadow-[0_0_14px_rgba(0,0,0,0.9)]"
                 style={{ left: `${wipePos}%` }}
@@ -293,7 +290,7 @@ export const AllBeforeAfterGallery: React.FC<AllBeforeAfterGalleryProps> = ({
               {/* Interactive Drag Hint */}
               <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-30 pointer-events-none opacity-85 group-hover:opacity-100 transition-opacity">
                 <span className="px-3 py-1 rounded-full bg-slate-950/80 backdrop-blur-sm text-[11px] text-white font-medium shadow-sm">
-                  Drag white handle left & right to move both images
+                  {t('gallery.dragHint')}
                 </span>
               </div>
             </div>
@@ -328,16 +325,16 @@ export const AllBeforeAfterGallery: React.FC<AllBeforeAfterGalleryProps> = ({
                 <div>
                   <div className="text-[11px] uppercase tracking-wider text-blue-300 font-semibold flex items-center gap-1">
                     <Clock className="w-3 h-3 text-cyan-400" />
-                    <span>Timeline</span>
+                    <span>{t('gallery.timeline')}</span>
                   </div>
                   <div className="text-sm font-bold text-white mt-0.5">{activeProject.duration}</div>
                 </div>
                 <div>
                   <div className="text-[11px] uppercase tracking-wider text-blue-300 font-semibold flex items-center gap-1">
                     <Ruler className="w-3 h-3 text-cyan-400" />
-                    <span>Footprint</span>
+                    <span>{t('gallery.footprint')}</span>
                   </div>
-                  <div className="text-sm font-bold text-white mt-0.5">{activeProject.sqft || 'Full Scope'}</div>
+                  <div className="text-sm font-bold text-white mt-0.5">{activeProject.sqft || (lang === 'es' ? 'Alcance Completo' : 'Full Scope')}</div>
                 </div>
               </div>
 
@@ -354,7 +351,7 @@ export const AllBeforeAfterGallery: React.FC<AllBeforeAfterGalleryProps> = ({
                 }}
                 className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-lg shadow-blue-600/30 transition-all cursor-pointer active:scale-95 border border-cyan-400/40"
               >
-                <span>Request Similar Transformation</span>
+                <span>{t('gallery.requestSimilar')}</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
@@ -365,10 +362,10 @@ export const AllBeforeAfterGallery: React.FC<AllBeforeAfterGalleryProps> = ({
           <div className="mt-8 pt-6 border-t border-blue-800/60">
             <div className="flex items-center justify-between mb-3">
               <span className="text-xs font-bold uppercase tracking-wider text-blue-300">
-                Browse All {filteredProjects.length} Projects In This Category
+                {t('gallery.browseCategory')} ({filteredProjects.length})
               </span>
               <span className="text-xs text-cyan-400 font-semibold">
-                Click any thumbnail to load
+                {t('gallery.clickThumbnail')}
               </span>
             </div>
 
@@ -434,6 +431,7 @@ const MasterInspectionModal: React.FC<MasterInspectionModalProps> = ({
   onClose,
   onRequestService
 }) => {
+  const { t, lang } = useLanguage();
   const [sliderPos, setSliderPos] = useState<number>(50);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const modalContainerRef = useRef<HTMLDivElement>(null);
@@ -479,7 +477,7 @@ const MasterInspectionModal: React.FC<MasterInspectionModalProps> = ({
         <button
           onClick={onClose}
           className="absolute top-5 right-5 p-2 rounded-xl bg-blue-950 hover:bg-blue-900 text-blue-200 hover:text-white transition-colors cursor-pointer border border-blue-700/60"
-          aria-label="Close modal"
+          aria-label={t('gallery.modalClose')}
         >
           <X className="w-5 h-5" />
         </button>
@@ -496,11 +494,11 @@ const MasterInspectionModal: React.FC<MasterInspectionModalProps> = ({
             {project.title}
           </h3>
           <p className="text-xs sm:text-sm text-blue-200 mt-1">
-            Trades Involved: <span className="text-cyan-300 font-semibold">{project.tradeType}</span>
+            {lang === 'es' ? 'Oficios Involucrados:' : 'Trades Involved:'} <span className="text-cyan-300 font-semibold">{project.tradeType}</span>
           </p>
         </div>
 
-        {/* Interactive Fullscreen Slider: Both Images Move in Unison */}
+        {/* Interactive Fullscreen Slider */}
         <div
           ref={modalContainerRef}
           className="relative w-full aspect-[4/3] sm:aspect-[16/10] rounded-2xl overflow-hidden select-none cursor-ew-resize shadow-2xl mb-6 bg-slate-950"
@@ -523,7 +521,7 @@ const MasterInspectionModal: React.FC<MasterInspectionModalProps> = ({
             />
             <div className="absolute top-4 left-4 z-30 pointer-events-none">
               <span className="px-3 py-1 rounded-md bg-slate-950/90 text-xs font-black uppercase text-rose-300 border border-rose-500/50 shadow-md">
-                Before Remodel
+                {t('gallery.before')}
               </span>
             </div>
           </div>
@@ -543,7 +541,7 @@ const MasterInspectionModal: React.FC<MasterInspectionModalProps> = ({
             />
             <div className="absolute top-4 right-4 z-30 pointer-events-none">
               <span className="px-3 py-1 rounded-md bg-blue-600 text-xs font-black uppercase text-white border border-cyan-400 shadow-md">
-                After: Finished Craft
+                {t('gallery.after')}
               </span>
             </div>
           </div>
@@ -567,7 +565,7 @@ const MasterInspectionModal: React.FC<MasterInspectionModalProps> = ({
           <div className="md:col-span-8 space-y-4">
             <div>
               <h4 className="text-xs font-extrabold uppercase tracking-wider text-blue-300 mb-1">
-                Scope of Work Executed
+                {lang === 'es' ? 'Alcance del Trabajo Ejecutado' : 'Scope of Work Executed'}
               </h4>
               <p className="text-xs sm:text-sm text-blue-100 leading-relaxed">
                 {project.scopeSummary}
@@ -576,7 +574,7 @@ const MasterInspectionModal: React.FC<MasterInspectionModalProps> = ({
 
             <div>
               <h4 className="text-xs font-extrabold uppercase tracking-wider text-blue-300 mb-2">
-                Materials & Specifications
+                {lang === 'es' ? 'Materiales y Especificaciones' : 'Materials & Specifications'}
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {project.materialsUsed.map((mat, i) => (
@@ -592,11 +590,11 @@ const MasterInspectionModal: React.FC<MasterInspectionModalProps> = ({
           <div className="md:col-span-4 bg-blue-950/90 border border-blue-600/40 rounded-2xl p-4 sm:p-5 space-y-4">
             <div className="space-y-2">
               <div className="flex justify-between text-xs py-1 border-b border-blue-800">
-                <span className="text-blue-300">Timeline:</span>
+                <span className="text-blue-300">{t('gallery.timeline')}:</span>
                 <span className="font-bold text-white">{project.duration}</span>
               </div>
               <div className="flex justify-between text-xs py-1 border-b border-blue-800">
-                <span className="text-blue-300">Location:</span>
+                <span className="text-blue-300">{lang === 'es' ? 'Ubicación:' : 'Location:'}</span>
                 <span className="font-bold text-white">{project.location}</span>
               </div>
               {project.permitPassed && (
@@ -611,7 +609,7 @@ const MasterInspectionModal: React.FC<MasterInspectionModalProps> = ({
               onClick={onRequestService}
               className="w-full py-2.5 bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg shadow-blue-600/30 transition-all cursor-pointer flex items-center justify-center gap-2 border border-cyan-400/50"
             >
-              <span>Request Quote for This Trade</span>
+              <span>{lang === 'es' ? 'Solicitar Presupuesto para Este Oficio' : 'Request Quote for This Trade'}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>

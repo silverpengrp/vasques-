@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { 
-  MapPin, 
   Clock, 
   ShieldCheck, 
   Phone, 
@@ -15,12 +14,18 @@ interface CountyArea {
   id: string;
   state: 'NJ' | 'NY' | 'CT';
   stateName: string;
+  stateNameEs: string;
   countyName: string;
+  countyNameEs: string;
   region: string;
+  regionEs: string;
   dispatchTime: string;
+  dispatchTimeEs: string;
   permitStatus: string;
+  permitStatusEs: string;
   towns: string[];
   recentJobs: string;
+  recentJobsEs: string;
 }
 
 const SERVICE_AREAS: CountyArea[] = [
@@ -29,45 +34,69 @@ const SERVICE_AREAS: CountyArea[] = [
     id: 'mercer',
     state: 'NJ',
     stateName: 'New Jersey',
+    stateNameEs: 'Nueva Jersey',
     countyName: 'Mercer County, NJ',
+    countyNameEs: 'Condado de Mercer, NJ',
     region: 'Central New Jersey HQ',
+    regionEs: 'Sede Central de Nueva Jersey',
     dispatchTime: 'Same-Day Priority Dispatch',
+    dispatchTimeEs: 'Despacho Prioritario el Mismo Día',
     permitStatus: 'Direct relations with municipal building departments & rapid plan approval',
+    permitStatusEs: 'Relaciones directas con departamentos de edificación municipal y aprobación rápida de planos',
     towns: ['Princeton', 'Hamilton', 'Lawrenceville', 'Robbinsville', 'West Windsor', 'Hopewell', 'Ewing', 'Trenton'],
-    recentJobs: 'Complete kitchen remodels, second-story additions, architectural shingle roofs.'
+    recentJobs: 'Complete kitchen remodels, second-story additions, architectural shingle roofs.',
+    recentJobsEs: 'Remodelaciones completas de cocina, ampliaciones de segundo piso, techados de tejas arquitectónicas.'
   },
   {
     id: 'ocean-monmouth',
     state: 'NJ',
     stateName: 'New Jersey',
+    stateNameEs: 'Nueva Jersey',
     countyName: 'Ocean & Monmouth, NJ',
+    countyNameEs: 'Ocean y Monmouth, NJ',
     region: 'Jersey Shore & Coastal',
+    regionEs: 'Costa de Jersey y Zona Costera',
     dispatchTime: 'Within 24 Hours',
+    dispatchTimeEs: 'En Menos de 24 Horas',
     permitStatus: 'Coastal wind load codes, stainless hurricane ties, & FEMA flood plain standards',
+    permitStatusEs: 'Códigos para vientos costeros, anclajes contra huracanes de acero inoxidable y normas FEMA',
     towns: ['Toms River', 'Brick Township', 'Point Pleasant', 'Freehold', 'Marlboro', 'Manalapan', 'Red Bank', 'Middletown', 'Colts Neck'],
-    recentJobs: 'Custom composite multi-level decks, storm damage roof restorations, luxury paver patios.'
+    recentJobs: 'Custom composite multi-level decks, storm damage roof restorations, luxury paver patios.',
+    recentJobsEs: 'Terrazas de compuesto multinivel personalizadas, techados por daños de tormenta, patios de adoquines.'
   },
   {
     id: 'middlesex-north',
     state: 'NJ',
     stateName: 'New Jersey',
+    stateNameEs: 'Nueva Jersey',
     countyName: 'Middlesex & North Jersey, NJ',
+    countyNameEs: 'Middlesex y Norte de Jersey, NJ',
     region: 'Central & North Corridor',
+    regionEs: 'Corredor Central y Norte',
     dispatchTime: 'Within 24 Hours',
+    dispatchTimeEs: 'En Menos de 24 Horas',
     permitStatus: 'Full residential zoning setbacks, framing engineering, and building inspection pass',
+    permitStatusEs: 'Retiros zonales residenciales, ingeniería de estructuras y aprobación de inspección',
     towns: ['Edison', 'Woodbridge', 'Old Bridge', 'East Brunswick', 'Paramus', 'Hoboken', 'Jersey City', 'Montclair', 'South Brunswick'],
-    recentJobs: 'Open-concept interior renovations, James Hardie siding, commercial finish basements.'
+    recentJobs: 'Open-concept interior renovations, James Hardie siding, commercial finish basements.',
+    recentJobsEs: 'Renovaciones de concepto abierto, revestimiento James Hardie, sótanos con acabados comerciales.'
   },
   {
     id: 'south-jersey',
     state: 'NJ',
     stateName: 'New Jersey',
+    stateNameEs: 'Nueva Jersey',
     countyName: 'Burlington & Camden, NJ',
+    countyNameEs: 'Burlington y Camden, NJ',
     region: 'South New Jersey',
+    regionEs: 'Sur de Nueva Jersey',
     dispatchTime: 'Within 24–48 Hours',
+    dispatchTimeEs: 'En 24 a 48 Horas',
     permitStatus: 'Licensed contractor credentials on file across all township building offices',
+    permitStatusEs: 'Credenciales de contratista registrado en todas las oficinas de edificación del municipio',
     towns: ['Cherry Hill', 'Mount Laurel', 'Marlton', 'Moorestown', 'Voorhees', 'Medford', 'Haddonfield', 'Cinnaminson'],
-    recentJobs: 'Deck rebuilds, curbless master showers, foundation repointing, tree clearance.'
+    recentJobs: 'Deck rebuilds, curbless master showers, foundation repointing, tree clearance.',
+    recentJobsEs: 'Reconstrucción de terrazas, duchas principales sin reborde, rejuntado de cimientos, poda de árboles.'
   },
 
   // NEW YORK
@@ -75,34 +104,52 @@ const SERVICE_AREAS: CountyArea[] = [
     id: 'westchester-rockland',
     state: 'NY',
     stateName: 'New York',
+    stateNameEs: 'Nueva York',
     countyName: 'Westchester & Rockland, NY',
+    countyNameEs: 'Westchester y Rockland, NY',
     region: 'Hudson Valley & Suburbs',
+    regionEs: 'Valle del Hudson y Suburbios',
     dispatchTime: 'Within 24–48 Hours',
+    dispatchTimeEs: 'En 24 a 48 Horas',
     permitStatus: 'New York State Uniform Code compliance, architectural plans & municipal filings',
+    permitStatusEs: 'Cumplimiento del Código Uniforme del Estado de NY, planos arquitectónicos y radicaciones',
     towns: ['White Plains', 'Yonkers', 'Scarsdale', 'New Rochelle', 'Rye', 'Mamaroneck', 'Nyack', 'Tarrytown', 'Ossining'],
-    recentJobs: 'Slate and architectural roof replacements, structural deck expansions, luxury kitchen overhauls.'
+    recentJobs: 'Slate and architectural roof replacements, structural deck expansions, luxury kitchen overhauls.',
+    recentJobsEs: 'Reemplazo de techos arquitectónicos y pizarra, ampliación de terrazas, cocinas de lujo.'
   },
   {
     id: 'nyc-metro',
     state: 'NY',
     stateName: 'New York',
+    stateNameEs: 'Nueva York',
     countyName: 'New York City Metro, NY',
+    countyNameEs: 'Área Metropolitana de NYC, NY',
     region: 'Five Boroughs Metro',
+    regionEs: 'Área de los Cinco Distritos',
     dispatchTime: 'Priority Scheduled Consultations',
+    dispatchTimeEs: 'Consultas Programadas Prioritarias',
     permitStatus: 'NYC Department of Buildings (DOB) compliance & landmark restoration expertise',
+    permitStatusEs: 'Cumplimiento del DOB de NYC y experiencia en restauración de edificios históricos',
     towns: ['Staten Island', 'Brooklyn', 'Queens', 'Manhattan', 'The Bronx', 'Riverdale', 'Astoria', 'Bay Ridge'],
-    recentJobs: 'Rooftop composite decks, brownstone masonry repointing, complete bathroom gut renovations.'
+    recentJobs: 'Rooftop composite decks, brownstone masonry repointing, complete bathroom gut renovations.',
+    recentJobsEs: 'Terrazas en azoteas de compuesto, rejuntado de mampostería histórica, remodelación total de baños.'
   },
   {
     id: 'long-island',
     state: 'NY',
     stateName: 'New York',
+    stateNameEs: 'Nueva York',
     countyName: 'Nassau & Suffolk, NY',
+    countyNameEs: 'Nassau y Suffolk, NY',
     region: 'Long Island Shore & Sound',
+    regionEs: 'Costa y Estuario de Long Island',
     dispatchTime: 'Within 24–48 Hours',
+    dispatchTimeEs: 'En 24 a 48 Horas',
     permitStatus: 'Long Island municipal permit processing, windstorm fasteners, & moisture sealing',
+    permitStatusEs: 'Tramitación de permisos en Long Island, sujeciones anticiclónicas y sellado contra humedad',
     towns: ['Garden City', 'Great Neck', 'Manhasset', 'Oyster Bay', 'Huntington', 'Melville', 'Smithtown', 'Massapequa'],
-    recentJobs: 'Multi-tiered outdoor living spaces, premium roofing systems, Hardie board siding transformations.'
+    recentJobs: 'Multi-tiered outdoor living spaces, premium roofing systems, Hardie board siding transformations.',
+    recentJobsEs: 'Espacios de vida al aire libre multinivel, sistemas de techado premium, revestimiento Hardie.'
   },
 
   // CONNECTICUT
@@ -110,23 +157,35 @@ const SERVICE_AREAS: CountyArea[] = [
     id: 'fairfield-ct',
     state: 'CT',
     stateName: 'Connecticut',
+    stateNameEs: 'Connecticut',
     countyName: 'Fairfield County, CT',
+    countyNameEs: 'Condado de Fairfield, CT',
     region: 'Connecticut Gold Coast',
+    regionEs: 'Costa Dorada de Connecticut',
     dispatchTime: 'Within 24–48 Hours',
+    dispatchTimeEs: 'En 24 a 48 Horas',
     permitStatus: 'Connecticut State Building Code (CSBC) & Department of Consumer Protection registered',
+    permitStatusEs: 'Registrado con el Código de Edificación del Estado de CT y Protección al Consumidor',
     towns: ['Greenwich', 'Stamford', 'Norwalk', 'Westport', 'Darien', 'Fairfield', 'New Canaan', 'Ridgefield', 'Wilton'],
-    recentJobs: 'Architectural composite decking, cedar shake & copper flashing roof builds, high-end master suite remodels.'
+    recentJobs: 'Architectural composite decking, cedar shake & copper flashing roof builds, high-end master suite remodels.',
+    recentJobsEs: 'Terrazas arquitectónicas de compuesto, techos de teja de cedro con cobre, suites principales.'
   },
   {
     id: 'new-haven-ct',
     state: 'CT',
     stateName: 'Connecticut',
+    stateNameEs: 'Connecticut',
     countyName: 'New Haven County, CT',
+    countyNameEs: 'Condado de New Haven, CT',
     region: 'South Central Connecticut',
+    regionEs: 'Centro Sur de Connecticut',
     dispatchTime: 'Within 24–48 Hours',
+    dispatchTimeEs: 'En 24 a 48 Horas',
     permitStatus: 'Municipal building inspector relations & 100% Connecticut code pass approval',
+    permitStatusEs: 'Excelente relación con inspectores municipales y 100% de aprobación en códigos de CT',
     towns: ['Milford', 'New Haven', 'Orange', 'Woodbridge', 'Branford', 'Guilford', 'Cheshire', 'Hamden'],
-    recentJobs: 'Custom porticos, exterior waterproofing, full interior restorations, masonry walkways.'
+    recentJobs: 'Custom porticos, exterior waterproofing, full interior restorations, masonry walkways.',
+    recentJobsEs: 'Pórticos personalizados, impermeabilización exterior, restauraciones interiores, caminos de mampostería.'
   }
 ];
 
@@ -135,7 +194,7 @@ interface ServiceAreaSectionProps {
 }
 
 export const ServiceAreaSection: React.FC<ServiceAreaSectionProps> = ({ onOpenEstimateModal }) => {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [selectedStateFilter, setSelectedStateFilter] = useState<'ALL' | 'NJ' | 'NY' | 'CT'>('ALL');
   const [selectedCountyId, setSelectedCountyId] = useState<string>('mercer');
 
@@ -144,6 +203,12 @@ export const ServiceAreaSection: React.FC<ServiceAreaSectionProps> = ({ onOpenEs
     : SERVICE_AREAS.filter(area => area.state === selectedStateFilter);
 
   const activeCounty = SERVICE_AREAS.find(c => c.id === selectedCountyId) || filteredAreas[0] || SERVICE_AREAS[0];
+
+  const activeCountyName = lang === 'es' ? activeCounty.countyNameEs : activeCounty.countyName;
+  const activeStateName = lang === 'es' ? activeCounty.stateNameEs : activeCounty.stateName;
+  const activeDispatchTime = lang === 'es' ? activeCounty.dispatchTimeEs : activeCounty.dispatchTime;
+  const activePermitStatus = lang === 'es' ? activeCounty.permitStatusEs : activeCounty.permitStatus;
+  const activeRecentJobs = lang === 'es' ? activeCounty.recentJobsEs : activeCounty.recentJobs;
 
   return (
     <section id="service-area-section" className="py-20 md:py-28 bg-gradient-to-b from-[#071630] via-[#0a1e42] to-[#071630] text-slate-100 relative overflow-hidden border-t border-b border-blue-500/30 shadow-2xl">
@@ -185,8 +250,8 @@ export const ServiceAreaSection: React.FC<ServiceAreaSectionProps> = ({ onOpenEs
               <Building2 className="w-5 h-5 text-cyan-400 shrink-0" />
             </div>
             <div className="text-xs">
-              <span className="font-bold text-white block">Central Tri-State Mobilization</span>
-              <span className="text-emerald-300 font-semibold">Active Crews in NY, NJ & CT</span>
+              <span className="font-bold text-white block">{t('area.badge.title')}</span>
+              <span className="text-emerald-300 font-semibold">{t('area.badge.subtitle')}</span>
             </div>
           </div>
         </div>
@@ -194,7 +259,7 @@ export const ServiceAreaSection: React.FC<ServiceAreaSectionProps> = ({ onOpenEs
         {/* State Filter Bar */}
         <div className="flex flex-wrap items-center gap-2 mb-6">
           <span className="text-xs font-bold uppercase tracking-wider text-blue-300 mr-1">
-            Filter State:
+            {t('area.filterLabel')}
           </span>
           {[
             { id: 'ALL', label: t('area.filter.all') },
@@ -232,6 +297,8 @@ export const ServiceAreaSection: React.FC<ServiceAreaSectionProps> = ({ onOpenEs
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 mb-8">
           {filteredAreas.map((county) => {
             const isSelected = county.id === activeCounty.id;
+            const countyLabel = lang === 'es' ? county.countyNameEs : county.countyName;
+            const regionLabel = lang === 'es' ? county.regionEs : county.region;
             return (
               <button
                 key={county.id}
@@ -246,7 +313,7 @@ export const ServiceAreaSection: React.FC<ServiceAreaSectionProps> = ({ onOpenEs
                   <span className={`text-[10px] font-bold uppercase tracking-wider ${
                     isSelected ? 'text-cyan-100' : 'text-cyan-400'
                   }`}>
-                    {county.region}
+                    {regionLabel}
                   </span>
                   <span className={`text-[10px] font-black px-1.5 py-0.5 rounded font-mono ${
                     isSelected ? 'bg-white/20 text-white' : 'bg-blue-950/80 text-cyan-300 border border-blue-800'
@@ -255,7 +322,7 @@ export const ServiceAreaSection: React.FC<ServiceAreaSectionProps> = ({ onOpenEs
                   </span>
                 </div>
                 <div className="text-sm font-black leading-tight text-white">
-                  {county.countyName}
+                  {countyLabel}
                 </div>
               </button>
             );
@@ -270,10 +337,10 @@ export const ServiceAreaSection: React.FC<ServiceAreaSectionProps> = ({ onOpenEs
             
             <div>
               <div className="flex items-center gap-2 text-xs font-bold text-cyan-400 uppercase tracking-widest mb-1">
-                <span>Active Municipalities Served in {activeCounty.stateName}</span>
+                <span>{t('area.activeMun')} {activeStateName}</span>
               </div>
               <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
-                <span>{activeCounty.countyName}</span>
+                <span>{activeCountyName}</span>
                 <span className="text-xs px-2.5 py-1 rounded-lg bg-blue-600/40 border border-blue-400/50 text-cyan-200 font-mono">
                   {activeCounty.state}
                 </span>
@@ -283,7 +350,7 @@ export const ServiceAreaSection: React.FC<ServiceAreaSectionProps> = ({ onOpenEs
             {/* Towns Grid */}
             <div>
               <div className="text-xs font-bold text-blue-300 uppercase tracking-wider mb-3">
-                Covered Towns & Townships
+                {t('area.coveredTowns')}
               </div>
               <div className="flex flex-wrap gap-2">
                 {activeCounty.towns.map((town, idx) => (
@@ -300,10 +367,10 @@ export const ServiceAreaSection: React.FC<ServiceAreaSectionProps> = ({ onOpenEs
 
             <div className="pt-2">
               <div className="text-xs font-bold text-blue-300 uppercase tracking-wider mb-1">
-                Recent Projects in {activeCounty.countyName}
+                {t('area.recentProjects')} {activeCountyName}
               </div>
               <p className="text-xs sm:text-sm text-blue-100/90 leading-relaxed font-normal">
-                {activeCounty.recentJobs}
+                {activeRecentJobs}
               </p>
             </div>
 
@@ -315,20 +382,20 @@ export const ServiceAreaSection: React.FC<ServiceAreaSectionProps> = ({ onOpenEs
             <div className="space-y-1">
               <div className="text-[11px] uppercase tracking-wider text-blue-300 font-bold flex items-center gap-1.5">
                 <Clock className="w-4 h-4 text-cyan-400" />
-                <span>Estimate Response Window</span>
+                <span>{t('area.responseWindow')}</span>
               </div>
               <div className="text-lg font-black text-white">
-                {activeCounty.dispatchTime}
+                {activeDispatchTime}
               </div>
             </div>
 
             <div className="pt-3 border-t border-blue-800/60 space-y-1">
               <div className="text-[11px] uppercase tracking-wider text-blue-300 font-bold flex items-center gap-1.5">
                 <ShieldCheck className="w-4 h-4 text-cyan-400" />
-                <span>Building Department Permitting Knowledge</span>
+                <span>{t('area.permittingKnowledge')}</span>
               </div>
               <p className="text-xs text-blue-100/90 leading-relaxed font-medium">
-                {activeCounty.permitStatus}
+                {activePermitStatus}
               </p>
             </div>
 
@@ -337,7 +404,9 @@ export const ServiceAreaSection: React.FC<ServiceAreaSectionProps> = ({ onOpenEs
                 onClick={onOpenEstimateModal}
                 className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg shadow-blue-600/30 transition-all cursor-pointer active:scale-95 border border-cyan-400/40"
               >
-                <span>Request {activeCounty.countyName} On-Site Visit</span>
+                <span>
+                  {lang === 'es' ? `Solicitar Visita en ${activeCountyName}` : `Request ${activeCounty.countyName} On-Site Visit`}
+                </span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 
@@ -346,7 +415,7 @@ export const ServiceAreaSection: React.FC<ServiceAreaSectionProps> = ({ onOpenEs
                 className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-900/60 hover:bg-blue-800 text-white font-bold text-xs rounded-xl border border-blue-600/40 transition-colors"
               >
                 <Phone className="w-3.5 h-3.5 text-cyan-400" />
-                <span>Call Dispatch: +1 (609) 481-8197</span>
+                <span>{t('area.callDispatch')}: +1 (609) 481-8197</span>
               </a>
             </div>
 

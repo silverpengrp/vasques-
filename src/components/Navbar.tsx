@@ -6,12 +6,64 @@ import {
   ArrowRight, 
   Star,
   Layers,
-  Sparkles,
-  MapPin,
-  Globe
+  Sparkles
 } from 'lucide-react';
 import { VasquezLogoIcon } from './VasquezLogoIcon';
 import { useLanguage } from '../context/LanguageContext';
+
+// Crisp official vector flag icons for US and Spain
+export const USAFlagIcon: React.FC<{ className?: string }> = ({ className = "w-5 h-3.5" }) => (
+  <svg 
+    viewBox="0 0 640 480" 
+    className={`rounded-[2px] shadow-xs overflow-hidden inline-block shrink-0 ${className}`}
+    aria-hidden="true"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path fill="#bd3d44" d="M0 0h640v480H0z" />
+    <path stroke="#fff" strokeWidth="37" d="M0 55.5h640M0 129.5h640M0 203.5h640M0 277.5h640M0 351.5h640M0 425.5h640" />
+    <path fill="#192f5d" d="M0 0h260v258.5H0z" />
+    <g fill="#fff">
+      {[
+        [26, 26], [78, 26], [130, 26], [182, 26], [234, 26],
+        [52, 52], [104, 52], [156, 52], [208, 52],
+        [26, 78], [78, 78], [130, 78], [182, 78], [234, 78],
+        [52, 104], [104, 104], [156, 104], [208, 104],
+        [26, 130], [78, 130], [130, 130], [182, 130], [234, 130],
+        [52, 156], [104, 156], [156, 156], [208, 156],
+        [26, 182], [78, 182], [130, 182], [182, 182], [234, 182],
+        [52, 208], [104, 208], [156, 208], [208, 208],
+        [26, 234], [78, 234], [130, 234], [182, 234], [234, 234],
+      ].map(([cx, cy], i) => (
+        <circle key={i} cx={cx} cy={cy} r="6.5" />
+      ))}
+    </g>
+  </svg>
+);
+
+export const SpainFlagIcon: React.FC<{ className?: string }> = ({ className = "w-5 h-3.5" }) => (
+  <svg 
+    viewBox="0 0 640 480" 
+    className={`rounded-[2px] shadow-xs overflow-hidden inline-block shrink-0 ${className}`}
+    aria-hidden="true"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path fill="#c60b1e" d="M0 0h640v480H0z" />
+    <path fill="#ffc400" d="M0 120h640v240H0z" />
+    <g transform="translate(145, 175) scale(0.9)">
+      <path d="M10 20 L20 5 L30 18 L40 5 L50 20 Z" fill="#ffc400" stroke="#c60b1e" strokeWidth="2" />
+      <circle cx="20" cy="5" r="3" fill="#ffc400" />
+      <circle cx="40" cy="5" r="3" fill="#ffc400" />
+      <circle cx="30" cy="12" r="2.5" fill="#c60b1e" />
+      <path d="M12 25 H48 V65 C48 80 30 95 30 95 C30 95 12 80 12 65 Z" fill="#c60b1e" stroke="#fff" strokeWidth="2" />
+      <rect x="18" y="32" width="24" height="24" fill="#ffc400" />
+      <circle cx="30" cy="44" r="5" fill="#003399" stroke="#ffc400" strokeWidth="1.5" />
+      <rect x="2" y="35" width="5" height="55" rx="1.5" fill="#fff" />
+      <rect x="53" y="35" width="5" height="55" rx="1.5" fill="#fff" />
+      <path d="M-1 55 Q4 48 9 55" stroke="#c60b1e" strokeWidth="3" fill="none" />
+      <path d="M51 55 Q56 48 61 55" stroke="#c60b1e" strokeWidth="3" fill="none" />
+    </g>
+  </svg>
+);
 
 interface NavbarProps {
   onOpenEstimateModal: () => void;
@@ -93,16 +145,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenEstimateModal }) => {
               </a>
             </div>
 
-            {/* CENTER: DESKTOP NAVIGATION CATEGORIES (10 Trades, Our Work, Reviews, Coverage) */}
-            <div className="hidden lg:flex items-center space-x-1.5 text-xs font-semibold text-slate-300">
-              <button
-                onClick={() => scrollTo('services-section')}
-                className="px-3.5 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800/80 transition-all cursor-pointer flex items-center gap-1.5"
-              >
-                <Layers className="w-3.5 h-3.5 text-blue-400" />
-                <span>{t('nav.trades')}</span>
-              </button>
-
+            {/* CENTER: DESKTOP NAVIGATION CATEGORIES (Work, Trades, Reviews) */}
+            <div className="hidden lg:flex items-center space-x-2 text-xs font-semibold text-slate-300">
               <button
                 onClick={() => scrollTo('transformations-section')}
                 className="px-3.5 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800/80 transition-all cursor-pointer flex items-center gap-1.5"
@@ -112,56 +156,55 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenEstimateModal }) => {
               </button>
 
               <button
+                onClick={() => scrollTo('services-section')}
+                className="px-3.5 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800/80 transition-all cursor-pointer flex items-center gap-1.5"
+              >
+                <Layers className="w-3.5 h-3.5 text-blue-400" />
+                <span>{t('nav.trades')}</span>
+              </button>
+
+              <button
                 onClick={() => scrollTo('hero-reviews-section')}
                 className="px-3.5 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800/80 transition-all cursor-pointer flex items-center gap-1.5"
               >
                 <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
                 <span>{t('nav.reviews')}</span>
               </button>
-
-              <button
-                onClick={() => scrollTo('service-area-section')}
-                className="px-3.5 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800/80 transition-all cursor-pointer flex items-center gap-1.5"
-              >
-                <MapPin className="w-3.5 h-3.5 text-cyan-400" />
-                <span>{t('nav.coverage')}</span>
-              </button>
             </div>
 
-            {/* RIGHT: DESKTOP PHONE, ESTIMATE & TRANSLATE (ESP / ENG) BUTTONS */}
+            {/* RIGHT: DESKTOP PHONE, ESTIMATE & TRANSLATE (FLAGS) BUTTONS */}
             <div className="hidden md:flex items-center gap-2.5 shrink-0">
               
-              {/* Language Segmented Toggle (ESP / ENG) */}
+              {/* Flag Language Switcher (US 🇺🇸 / Spain 🇪🇸) */}
               <div 
-                className="flex items-center p-0.5 rounded-xl bg-slate-900 border border-slate-700/80 shadow-inner"
-                title="Translate website / Traducir sitio"
+                className="flex items-center p-1 rounded-xl bg-slate-900 border border-slate-700/80 shadow-inner gap-1"
+                title={lang === 'en' ? 'Language: English' : 'Idioma: Español'}
               >
-                <div className="px-1.5 text-slate-400">
-                  <Globe className="w-3.5 h-3.5 text-cyan-400" />
-                </div>
                 <button
                   type="button"
                   onClick={() => setLang('en')}
-                  className={`px-2 py-1 rounded-lg text-[11px] font-black transition-all cursor-pointer ${
+                  className={`p-1.5 rounded-lg transition-all cursor-pointer flex items-center justify-center ${
                     lang === 'en'
-                      ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-sm'
-                      : 'text-slate-400 hover:text-slate-200'
+                      ? 'bg-blue-600/90 ring-2 ring-cyan-400 shadow-md shadow-blue-500/30 scale-105'
+                      : 'opacity-50 hover:opacity-100 hover:bg-slate-800'
                   }`}
                   aria-label="Switch to English"
+                  title="English (US)"
                 >
-                  ENG
+                  <USAFlagIcon className="w-6 h-4" />
                 </button>
                 <button
                   type="button"
                   onClick={() => setLang('es')}
-                  className={`px-2 py-1 rounded-lg text-[11px] font-black transition-all cursor-pointer ${
+                  className={`p-1.5 rounded-lg transition-all cursor-pointer flex items-center justify-center ${
                     lang === 'es'
-                      ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-sm'
-                      : 'text-slate-400 hover:text-slate-200'
+                      ? 'bg-blue-600/90 ring-2 ring-cyan-400 shadow-md shadow-blue-500/30 scale-105'
+                      : 'opacity-50 hover:opacity-100 hover:bg-slate-800'
                   }`}
                   aria-label="Cambiar a Español"
+                  title="Español (ES)"
                 >
-                  ESP
+                  <SpainFlagIcon className="w-6 h-4" />
                 </button>
               </div>
 
@@ -188,31 +231,36 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenEstimateModal }) => {
             {/* MOBILE ACTIONS: TRANSLATE TOGGLE & THREE-BAR MENU BUTTON */}
             <div className="flex md:hidden items-center gap-2">
               
-              {/* Mobile Language Toggle */}
-              <div className="flex items-center p-0.5 rounded-xl bg-slate-900 border border-slate-700/80 shadow-inner">
+              {/* Mobile Flag Language Toggle */}
+              <div 
+                className="flex items-center p-1 rounded-xl bg-slate-900 border border-slate-700/80 shadow-inner gap-1"
+                title={lang === 'en' ? 'Language: English' : 'Idioma: Español'}
+              >
                 <button
                   type="button"
                   onClick={() => setLang('en')}
-                  className={`px-2 py-1 rounded-lg text-[10px] font-black transition-all cursor-pointer ${
+                  className={`p-1.5 rounded-lg transition-all cursor-pointer flex items-center justify-center ${
                     lang === 'en'
-                      ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-sm'
-                      : 'text-slate-400 hover:text-slate-200'
+                      ? 'bg-blue-600/90 ring-2 ring-cyan-400 shadow-md shadow-blue-500/30 scale-105'
+                      : 'opacity-50 hover:opacity-100 hover:bg-slate-800'
                   }`}
                   aria-label="Switch to English"
+                  title="English (US)"
                 >
-                  ENG
+                  <USAFlagIcon className="w-5 h-3.5" />
                 </button>
                 <button
                   type="button"
                   onClick={() => setLang('es')}
-                  className={`px-2 py-1 rounded-lg text-[10px] font-black transition-all cursor-pointer ${
+                  className={`p-1.5 rounded-lg transition-all cursor-pointer flex items-center justify-center ${
                     lang === 'es'
-                      ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-sm'
-                      : 'text-slate-400 hover:text-slate-200'
+                      ? 'bg-blue-600/90 ring-2 ring-cyan-400 shadow-md shadow-blue-500/30 scale-105'
+                      : 'opacity-50 hover:opacity-100 hover:bg-slate-800'
                   }`}
                   aria-label="Cambiar a Español"
+                  title="Español (ES)"
                 >
-                  ESP
+                  <SpainFlagIcon className="w-5 h-3.5" />
                 </button>
               </div>
 
@@ -239,11 +287,55 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenEstimateModal }) => {
               <div className="p-1 rounded-full bg-blue-950/80 border-2 border-blue-400/60 shadow-md">
                 <VasquezLogoIcon className="w-11 h-11 filter drop-shadow-md" />
               </div>
-              <div>
-                <div className="text-sm font-black text-white uppercase tracking-wider">Vasquez Home Improvement</div>
+              <div className="flex-1 min-w-0">
+                <div className="text-sm font-black text-white uppercase tracking-wider truncate">Vasquez Home Improvement</div>
                 <div className="text-[11px] text-cyan-400 font-mono">{t('brand.entity')}</div>
               </div>
             </div>
+
+            {/* Language Switcher in Drawer */}
+            <div className="flex items-center justify-between px-3 py-2 bg-slate-900/90 rounded-xl border border-slate-800 mb-1">
+              <span className="text-xs font-semibold text-slate-300">
+                {lang === 'en' ? 'Language / Idioma' : 'Idioma / Language'}
+              </span>
+              <div className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => setLang('en')}
+                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
+                    lang === 'en'
+                      ? 'bg-blue-600 text-white ring-1 ring-cyan-300 shadow-sm'
+                      : 'opacity-60 hover:opacity-100 bg-slate-800'
+                  }`}
+                  aria-label="English"
+                >
+                  <USAFlagIcon className="w-4 h-3" />
+                  <span className="text-[11px] font-bold">English</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setLang('es')}
+                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
+                    lang === 'es'
+                      ? 'bg-blue-600 text-white ring-1 ring-cyan-300 shadow-sm'
+                      : 'opacity-60 hover:opacity-100 bg-slate-800'
+                  }`}
+                  aria-label="Español"
+                >
+                  <SpainFlagIcon className="w-4 h-3" />
+                  <span className="text-[11px] font-bold">Español</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Navigation Categories (Work, Trades, Reviews) */}
+            <button
+              onClick={() => scrollTo('transformations-section')}
+              className="w-full text-left py-2.5 px-3 text-slate-200 hover:text-white hover:bg-slate-800/80 rounded-xl text-xs font-bold flex items-center gap-2.5 cursor-pointer"
+            >
+              <Sparkles className="w-4 h-4 text-cyan-400" />
+              <span>{t('nav.work')}</span>
+            </button>
 
             <button
               onClick={() => scrollTo('services-section')}
@@ -254,27 +346,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenEstimateModal }) => {
             </button>
 
             <button
-              onClick={() => scrollTo('transformations-section')}
-              className="w-full text-left py-2.5 px-3 text-slate-200 hover:text-white hover:bg-slate-800/80 rounded-xl text-xs font-bold flex items-center gap-2.5 cursor-pointer"
-            >
-              <Sparkles className="w-4 h-4 text-cyan-400" />
-              <span>{t('nav.work')}</span>
-            </button>
-
-            <button
               onClick={() => scrollTo('hero-reviews-section')}
               className="w-full text-left py-2.5 px-3 text-slate-200 hover:text-white hover:bg-slate-800/80 rounded-xl text-xs font-bold flex items-center gap-2.5 cursor-pointer"
             >
               <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
               <span>{t('nav.reviews')}</span>
-            </button>
-
-            <button
-              onClick={() => scrollTo('service-area-section')}
-              className="w-full text-left py-2.5 px-3 text-slate-200 hover:text-white hover:bg-slate-800/80 rounded-xl text-xs font-bold flex items-center gap-2.5 cursor-pointer"
-            >
-              <MapPin className="w-4 h-4 text-cyan-400" />
-              <span>{t('nav.coverage')}</span>
             </button>
 
             <div className="pt-3 border-t border-slate-800 flex flex-col gap-2">

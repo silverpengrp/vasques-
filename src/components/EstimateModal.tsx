@@ -15,17 +15,29 @@ interface EstimateModalProps {
   } | null;
 }
 
+const SERVICE_TITLES_ES: Record<string, string> = {
+  'Decks': 'Terrazas y Patios',
+  'Patios': 'Patios y Adoquines',
+  'Plumbing': 'Plomería Residencial',
+  'Remodeling': 'Remodelación de Cocinas y Baños',
+  'Additions': 'Ampliaciones y Estructuras',
+  'Masonry': 'Albañilería y Piedra',
+  'Roofing': 'Techados y Techos',
+  'Painting': 'Pintura Interior y Exterior',
+  'Pressure Washing': 'Lavado a Presión Comercial',
+  'Tree Trimming': 'Poda y Cuidado de Árboles'
+};
+
 export const EstimateModal: React.FC<EstimateModalProps> = ({
   isOpen,
   onClose,
   preselectedService,
   calculationDetails
 }) => {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [submitted, setSubmitted] = useState(false);
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
   const [service, setService] = useState(
     calculationDetails?.service || preselectedService || 'Decks'
   );
@@ -54,7 +66,7 @@ export const EstimateModal: React.FC<EstimateModalProps> = ({
         {/* Close Button */}
         <button
           onClick={handleResetAndClose}
-          className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 p-2 rounded-full bg-slate-100 hover:bg-slate-200 transition-colors"
+          className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 p-2 rounded-full bg-slate-100 hover:bg-slate-200 transition-colors cursor-pointer"
           aria-label="Close Modal"
         >
           <X className="w-5 h-5" />
@@ -65,15 +77,25 @@ export const EstimateModal: React.FC<EstimateModalProps> = ({
             <div className="w-16 h-16 rounded-full bg-emerald-100 border border-emerald-300 flex items-center justify-center text-emerald-600 mb-4">
               <CheckCircle2 className="w-8 h-8" />
             </div>
-            <h3 className="text-2xl font-black text-slate-900">Estimate Request Received!</h3>
+            <h3 className="text-2xl font-black text-slate-900">{t('modal.successTitle')}</h3>
             <p className="mt-2 text-slate-600 text-sm max-w-sm">
-              Thank you, <strong className="text-slate-900">{fullName || 'Neighbor'}</strong>. Our master contractor will call you within 2 hours at <span className="text-blue-600 font-mono font-bold">{phone || 'your phone number'}</span> to review measurements.
+              {lang === 'es' ? (
+                <>
+                  Gracias, <strong className="text-slate-900">{fullName || 'Estimado Propietario'}</strong>. {t('modal.successDesc')}{' '}
+                  <span className="text-blue-600 font-mono font-bold">{phone || 'su teléfono'}</span>.
+                </>
+              ) : (
+                <>
+                  Thank you, <strong className="text-slate-900">{fullName || 'Neighbor'}</strong>. {t('modal.successDesc')}{' '}
+                  <span className="text-blue-600 font-mono font-bold">{phone || 'your phone number'}</span>.
+                </>
+              )}
             </p>
             <button
               onClick={handleResetAndClose}
-              className="mt-6 px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold uppercase tracking-wider rounded-xl shadow-md transition-colors"
+              className="mt-6 px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold uppercase tracking-wider rounded-xl shadow-md transition-colors cursor-pointer"
             >
-              Close Window
+              {t('modal.close')}
             </button>
           </div>
         ) : (
@@ -105,7 +127,7 @@ export const EstimateModal: React.FC<EstimateModalProps> = ({
                 <input
                   type="text"
                   required
-                  placeholder="e.g. John Miller"
+                  placeholder={lang === 'es' ? 'ej. Carlos Mendoza' : 'e.g. John Miller'}
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   className="w-full bg-slate-50 border border-slate-300 focus:border-blue-600 rounded-xl px-3.5 py-2 text-xs text-slate-900 placeholder-slate-400 focus:outline-none transition-colors"
@@ -134,7 +156,7 @@ export const EstimateModal: React.FC<EstimateModalProps> = ({
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Princeton NJ, White Plains NY, Greenwich CT"
+                    placeholder={lang === 'es' ? 'ej. Princeton NJ, White Plains NY' : 'e.g. Princeton NJ, White Plains NY, Greenwich CT'}
                     value={town}
                     onChange={(e) => setTown(e.target.value)}
                     className="w-full bg-slate-50 border border-slate-300 focus:border-blue-600 rounded-xl px-3.5 py-2 text-xs text-slate-900 placeholder-slate-400 focus:outline-none transition-colors"
@@ -151,20 +173,23 @@ export const EstimateModal: React.FC<EstimateModalProps> = ({
                   onChange={(e) => setService(e.target.value)}
                   className="w-full bg-slate-50 border border-slate-300 focus:border-blue-600 rounded-xl px-3.5 py-2 text-xs text-slate-900 focus:outline-none transition-colors cursor-pointer"
                 >
-                  {SERVICES_DATA.map(s => (
-                    <option key={s.id} value={s.title}>{s.title}</option>
-                  ))}
-                  <option value="Multiple Trades">Multiple Trades / Whole House</option>
+                  {SERVICES_DATA.map(s => {
+                    const title = lang === 'es' && SERVICE_TITLES_ES[s.title] ? SERVICE_TITLES_ES[s.title] : s.title;
+                    return (
+                      <option key={s.id} value={s.title}>{title}</option>
+                    );
+                  })}
+                  <option value="Multiple Trades">{t('contact.multipleTrades')}</option>
                 </select>
               </div>
 
               <div>
                 <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                  {t('modal.notes', 'Brief Project Description')}
+                  {t('modal.notes')}
                 </label>
                 <textarea
                   rows={2}
-                  placeholder="Describe what you want built, repaired, or updated..."
+                  placeholder={t('modal.notesPlaceholder')}
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   className="w-full bg-slate-50 border border-slate-300 focus:border-blue-600 rounded-xl p-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none transition-colors resize-none"
@@ -181,7 +206,7 @@ export const EstimateModal: React.FC<EstimateModalProps> = ({
             </form>
 
             <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-              <span>Or call ownership directly:</span>
+              <span>{t('modal.directCall')}</span>
               <a href="tel:+16094818197" className="font-mono font-bold text-blue-600 hover:underline flex items-center gap-1">
                 <Phone className="w-3 h-3" />
                 +1 (609) 481-8197

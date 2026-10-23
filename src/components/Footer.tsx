@@ -1,14 +1,30 @@
 import React from 'react';
-import { Phone, Shield, MapPin, Clock, ArrowUp, Mail, CheckCircle2 } from 'lucide-react';
+import { Phone, Shield, MapPin, Clock, ArrowUp, CheckCircle2 } from 'lucide-react';
 import { SERVICES_DATA } from '../data/servicesData';
 import { VasquezLogoIcon } from './VasquezLogoIcon';
+import { useLanguage } from '../context/LanguageContext';
 
 interface FooterProps {
   onOpenEstimateModal: () => void;
   onSelectService: (serviceTitle: string) => void;
 }
 
+const SERVICE_TITLES_ES: Record<string, string> = {
+  'Decks': 'Terrazas y Patios',
+  'Patios': 'Patios y Adoquines',
+  'Plumbing': 'Plomería Residencial',
+  'Remodeling': 'Remodelación de Cocinas y Baños',
+  'Additions': 'Ampliaciones y Estructuras',
+  'Masonry': 'Albañilería y Piedra',
+  'Roofing': 'Techados y Techos',
+  'Painting': 'Pintura Interior y Exterior',
+  'Pressure Washing': 'Lavado a Presión Comercial',
+  'Tree Trimming': 'Poda y Cuidado de Árboles'
+};
+
 export const Footer: React.FC<FooterProps> = ({ onOpenEstimateModal, onSelectService }) => {
+  const { t, lang } = useLanguage();
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -31,25 +47,25 @@ export const Footer: React.FC<FooterProps> = ({ onOpenEstimateModal, onSelectSer
                   VASQUEZ
                 </h3>
                 <p className="text-xs font-bold text-blue-400 uppercase tracking-widest">
-                  HOME IMPROVEMENT CONTRACTOR LLC
+                  {t('brand.subtitle')}
                 </p>
                 <p className="text-xs text-slate-400 italic">
-                  One Company. All Solutions.
+                  {t('brand.slogan')}
                 </p>
               </div>
             </div>
 
             <p className="text-xs text-slate-400 leading-relaxed max-w-sm">
-              We build, remodel, and elevate homes across New York, New Jersey, and Connecticut with master craftsmanship. Decks, patios, roofing, plumbing, remodeling, additions, masonry, painting, pressure washing, and tree trimming.
+              {t('footer.companyDesc')}
             </p>
 
             <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-3.5 max-w-sm space-y-1.5 text-xs">
               <div className="flex items-center gap-2 text-blue-300 font-bold uppercase tracking-wider">
                 <Shield className="w-3.5 h-3.5 text-blue-400" />
-                <span>Licensed & Fully Insured Contractor LLC</span>
+                <span>{t('footer.licenseBadge')}</span>
               </div>
               <p className="text-[11px] text-slate-400">
-                General Liability Insurance • Workman's Compensation • Serving NY, NJ & CT
+                {t('footer.insuranceDetails')}
               </p>
             </div>
           </div>
@@ -57,26 +73,31 @@ export const Footer: React.FC<FooterProps> = ({ onOpenEstimateModal, onSelectSer
           {/* 10 Services Quick Links (4 cols) */}
           <div className="lg:col-span-4">
             <h4 className="text-xs font-bold text-white uppercase tracking-widest mb-4">
-              Our 10 Core Services
+              {t('footer.coreServices')}
             </h4>
             <div className="grid grid-cols-2 gap-y-2.5 gap-x-4 text-xs">
-              {SERVICES_DATA.map(service => (
-                <button
-                  key={service.id}
-                  onClick={() => onSelectService(service.title)}
-                  className="text-left text-slate-400 hover:text-blue-400 transition-colors flex items-center gap-2 cursor-pointer"
-                >
-                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0"></span>
-                  <span className="truncate">{service.title}</span>
-                </button>
-              ))}
+              {SERVICES_DATA.map(service => {
+                const localizedTitle = lang === 'es' && SERVICE_TITLES_ES[service.title] 
+                  ? SERVICE_TITLES_ES[service.title] 
+                  : service.title;
+                return (
+                  <button
+                    key={service.id}
+                    onClick={() => onSelectService(service.title)}
+                    className="text-left text-slate-400 hover:text-blue-400 transition-colors flex items-center gap-2 cursor-pointer"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0"></span>
+                    <span className="truncate">{localizedTitle}</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
           {/* Quick Contact & Dispatch (3 cols) */}
           <div className="lg:col-span-3 space-y-3">
             <h4 className="text-xs font-bold text-white uppercase tracking-widest mb-3">
-              Direct Contact
+              {t('footer.directContact')}
             </h4>
             
             <a
@@ -87,7 +108,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenEstimateModal, onSelectSer
                 <Phone className="w-4 h-4" />
               </div>
               <div>
-                <div className="text-[10px] uppercase font-bold text-blue-400 tracking-wider">Call Or Text</div>
+                <div className="text-[10px] uppercase font-bold text-blue-400 tracking-wider">{t('footer.callOrText')}</div>
                 <div className="text-sm font-black text-white font-mono">+1 (609) 481-8197</div>
               </div>
             </a>
@@ -95,15 +116,15 @@ export const Footer: React.FC<FooterProps> = ({ onOpenEstimateModal, onSelectSer
             <div className="space-y-2 text-xs text-slate-400 pt-1">
               <div className="flex items-center gap-2">
                 <MapPin className="w-3.5 h-3.5 text-blue-400 shrink-0" />
-                <span>Serving NY, NJ & Connecticut (Tri-State Area)</span>
+                <span>{t('brand.serving')} (NY, NJ, CT)</span>
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-3.5 h-3.5 text-blue-400 shrink-0" />
-                <span>Mon - Sat: 7:00 AM - 7:00 PM</span>
+                <span>{t('footer.hours')}</span>
               </div>
               <div className="flex items-center gap-2 text-emerald-400 font-semibold">
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                <span>24/7 Emergency Storm Dispatch</span>
+                <span>{t('footer.emergency')}</span>
               </div>
             </div>
 
@@ -111,7 +132,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenEstimateModal, onSelectSer
               onClick={onOpenEstimateModal}
               className="w-full mt-2 py-3 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-md shadow-blue-600/20 transition-all cursor-pointer"
             >
-              Get Free Estimate
+              {t('footer.getEstimate')}
             </button>
           </div>
 
@@ -120,18 +141,18 @@ export const Footer: React.FC<FooterProps> = ({ onOpenEstimateModal, onSelectSer
         {/* Bottom copyright & Slogan banner */}
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <div>
-            © {new Date().getFullYear()} Vasquez Home Improvement Contractor LLC. All Rights Reserved.
+            © {new Date().getFullYear()} Vasquez Home Improvement Contractor LLC. {t('footer.rights')}
           </div>
 
           <div className="text-blue-400 font-mono tracking-widest font-bold">
-            WE BUILD. WE IMPROVE. YOU ENJOY.
+            {t('brand.motto')}
           </div>
 
           <button
             onClick={scrollToTop}
             className="flex items-center gap-1.5 text-slate-400 hover:text-white transition-colors cursor-pointer"
           >
-            <span>Back To Top</span>
+            <span>{t('footer.backToTop')}</span>
             <ArrowUp className="w-4 h-4 text-blue-400" />
           </button>
         </div>
