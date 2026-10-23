@@ -9,6 +9,7 @@ import {
   Navigation,
   Building2
 } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 interface CountyArea {
   id: string;
@@ -134,6 +135,7 @@ interface ServiceAreaSectionProps {
 }
 
 export const ServiceAreaSection: React.FC<ServiceAreaSectionProps> = ({ onOpenEstimateModal }) => {
+  const { t } = useLanguage();
   const [selectedStateFilter, setSelectedStateFilter] = useState<'ALL' | 'NJ' | 'NY' | 'CT'>('ALL');
   const [selectedCountyId, setSelectedCountyId] = useState<string>('mercer');
 
@@ -168,13 +170,13 @@ export const ServiceAreaSection: React.FC<ServiceAreaSectionProps> = ({ onOpenEs
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-900/80 border border-blue-400/50 text-xs font-bold text-cyan-300 uppercase tracking-widest mb-3 shadow-inner">
               <Navigation className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Tri-State Service Corridor</span>
+              <span>{t('area.kicker')}</span>
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight">
-              Serving NY, NJ and Connecticut
+              {t('area.title')}
             </h2>
             <p className="mt-2 text-blue-100/90 text-sm sm:text-base max-w-2xl leading-relaxed">
-              We know New York, New Jersey, and Connecticut municipal building codes inside and out. Select your state or region to inspect active covered towns, dispatch windows, and municipal permit turnaround.
+              {t('area.desc')}
             </p>
           </div>
 
@@ -195,10 +197,10 @@ export const ServiceAreaSection: React.FC<ServiceAreaSectionProps> = ({ onOpenEs
             Filter State:
           </span>
           {[
-            { id: 'ALL', label: 'All Tri-State (NY, NJ, CT)' },
-            { id: 'NJ', label: 'New Jersey' },
-            { id: 'NY', label: 'New York' },
-            { id: 'CT', label: 'Connecticut' }
+            { id: 'ALL', label: t('area.filter.all') },
+            { id: 'NJ', label: t('area.filter.nj') },
+            { id: 'NY', label: t('area.filter.ny') },
+            { id: 'CT', label: t('area.filter.ct') }
           ].map((tab) => {
             const isActive = selectedStateFilter === tab.id;
             return (

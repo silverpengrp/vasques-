@@ -28,7 +28,7 @@ export const MobileAppHeaderQuickActions: React.FC<MobileAppHeaderQuickActionsPr
     { id: 'transformations-section', label: 'Before & After', sub: '9 Projects', icon: Sparkles, color: 'from-blue-600 to-cyan-500' },
     { id: 'services-section', label: '10 Trades', sub: 'All Specs', icon: Layers, color: 'from-indigo-600 to-blue-600' },
     { id: 'hero-reviews-section', label: '5.0 Reviews', sub: 'Verified', icon: Star, color: 'from-amber-500 to-orange-500' },
-    { id: 'service-area-section', label: 'NJ Coverage', sub: '4 Counties', icon: MapPin, color: 'from-emerald-600 to-teal-500' }
+    { id: 'service-area-section', label: 'NY, NJ & CT', sub: 'Tri-State', icon: MapPin, color: 'from-emerald-600 to-teal-500' }
   ];
 
   const scrollTo = (id: string) => {

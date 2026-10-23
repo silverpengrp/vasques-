@@ -16,6 +16,7 @@ import {
   FileCheck,
   Award
 } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 interface TradeDetail {
   id: string;
@@ -245,6 +246,7 @@ export const TradeMatrixSection: React.FC<TradeMatrixSectionProps> = ({
   onSelectServiceForEstimate,
   onOpenCalculatorWithService
 }) => {
+  const { t } = useLanguage();
   const [selectedTradeId, setSelectedTradeId] = useState<string>('decks');
 
   const activeTrade = TRADES.find(t => t.id === selectedTradeId) || TRADES[0];
@@ -284,20 +286,17 @@ export const TradeMatrixSection: React.FC<TradeMatrixSectionProps> = ({
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-300"></span>
               </span>
               <FileCheck className="w-4 h-4 text-cyan-400" />
-              <span>One Company. All Solutions.</span>
+              <span>{t('trades.kicker')}</span>
             </div>
 
             {/* Main Headline */}
             <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-[1.08]">
-              10 Master Trades{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-400 drop-shadow-[0_2px_15px_rgba(56,189,248,0.4)]">
-                Under One Roof
-              </span>
+              {t('trades.title')}
             </h2>
 
             {/* Subtitle */}
             <p className="mt-4 text-blue-100/90 text-sm sm:text-base md:text-lg max-w-2xl leading-relaxed font-normal">
-              No juggling separate subcontractors. Select any trade to inspect our architectural specifications, NY, NJ, and CT building code compliance, and certified materials.
+              {t('trades.desc')}
             </p>
           </div>
 

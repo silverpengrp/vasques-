@@ -12,6 +12,8 @@ import {
   MapPin,
   ChevronRight
 } from 'lucide-react';
+import heroCraftsmenImg from '../assets/images/vasquez_hero_main.png';
+import { useLanguage } from '../context/LanguageContext';
 
 interface HeroSectionProps {
   onOpenEstimateModal: () => void;
@@ -47,46 +49,56 @@ const CUSTOMER_AVATARS = [
 ];
 
 const POPULAR_SERVICES = [
-  { id: 'Decks', label: 'Decks & Patios' },
-  { id: 'Remodeling', label: 'Kitchen & Bath' },
-  { id: 'Roofing', label: 'Roofing & Siding' },
-  { id: 'Framing', label: 'Additions & Framing' },
-  { id: 'Flooring', label: 'Hardwood & Tile' }
+  { id: 'Decks', labelEn: 'Decks & Patios', labelEs: 'Terrazas y Patios' },
+  { id: 'Remodeling', labelEn: 'Kitchen & Bath', labelEs: 'Cocina y Baño' },
+  { id: 'Roofing', labelEn: 'Roofing & Siding', labelEs: 'Techos y Revestimiento' },
+  { id: 'Framing', labelEn: 'Additions & Framing', labelEs: 'Ampliaciones y Estructuras' },
+  { id: 'Flooring', labelEn: 'Hardwood & Tile', labelEs: 'Pisos y Azulejos' }
 ];
 
-const VALUE_PILLARS = [
-  {
-    title: 'Written Price Guarantee',
-    desc: 'Fixed itemized quotes with zero hidden change orders'
-  },
-  {
-    title: 'Owner on Every Site',
-    desc: 'Master builder Vasquez directly leads daily jobsite execution'
-  },
-  {
-    title: 'Township Code Pass',
-    desc: 'Full permitting and 100% township inspection approval'
-  },
-  {
-    title: 'Total Site Protection',
-    desc: 'Dust containment, floor shield runners, and daily cleanup'
-  }
-];
-
-const DEFAULT_HERO_IMAGE = '/vasquez_white_jumper_hero.png?v=8';
+// Fallback image paths engineered for universal GitHub Pages & static publishing
+const RELATIVE_PUBLIC_HERO = `${import.meta.env.BASE_URL}vasquez_white_jumper_hero.png`;
+const RELIABLE_HOSTED_HERO_FALLBACK = 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80';
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ 
   onOpenEstimateModal, 
   onSelectService 
 }) => {
+  const { t, lang } = useLanguage();
+
+  // Safely resolve the hero image:
+  // 1. Prioritize bundled Vite asset (heroCraftsmenImg) which is bundled with a relative content-hash path
+  // 2. Reject any temporary preview URLs or blob URLs that may linger in localStorage
   const [heroImage] = useState<string>(() => {
     try {
       const saved = localStorage.getItem('vasquez_custom_hero_image');
-      return saved || DEFAULT_HERO_IMAGE;
+      if (saved) {
+        // Discard temporary preview URLs or broken blob URLs
+        if (saved.startsWith('blob:') || saved.includes('.run.app') || saved.includes('localhost')) {
+          localStorage.removeItem('vasquez_custom_hero_image');
+          return heroCraftsmenImg;
+        }
+        // Valid data URL or relative path
+        if (saved.startsWith('data:image/') || saved.startsWith('./') || saved.startsWith('/')) {
+          return saved;
+        }
+      }
+      return heroCraftsmenImg;
     } catch {
-      return DEFAULT_HERO_IMAGE;
+      return heroCraftsmenImg;
     }
   });
+
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    const target = e.currentTarget;
+    if (target.src !== heroCraftsmenImg) {
+      target.src = heroCraftsmenImg;
+    } else if (!target.src.includes('vasquez_white_jumper_hero.png')) {
+      target.src = RELATIVE_PUBLIC_HERO;
+    } else {
+      target.src = RELIABLE_HOSTED_HERO_FALLBACK;
+    }
+  };
 
   const scrollToReviews = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -135,14 +147,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs text-cyan-300 font-semibold tracking-wide uppercase pt-1 pb-4 sm:pb-6">
           <span className="flex items-center gap-1.5 text-cyan-300">
             <ShieldCheck className="w-4 h-4 text-cyan-400" />
-            <span>Licensed & Insured Contractor LLC</span>
+            <span>{t('hero.kicker.lic')}</span>
           </span>
           <span aria-hidden="true" className="text-blue-400/50">·</span>
           <span className="font-mono text-cyan-200">Lic #13VH13437500</span>
           <span aria-hidden="true" className="text-blue-400/50 hidden sm:inline">·</span>
-          <span className="text-emerald-300 font-bold hidden sm:inline">Serving NY, NJ and Connecticut</span>
+          <span className="text-emerald-300 font-bold hidden sm:inline">{t('hero.kicker.serving')}</span>
           <span aria-hidden="true" className="text-blue-400/50 hidden md:inline">·</span>
-          <span className="text-blue-200/90 hidden md:inline">Tri-State Building Code Compliant</span>
+          <span className="text-blue-200/90 hidden md:inline">{t('hero.kicker.code')}</span>
         </div>
 
         {/* 2-Column Architectural Hero Showcase */}
@@ -154,9 +166,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             {/* Primary Headline */}
             <div className="space-y-3">
               <h1 className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.08]">
-                Master Craftsmanship.{' '}
+                {t('hero.title.prefix')}{' '}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-cyan-200 to-sky-400">
-                  Serving NY, NJ and Connecticut.
+                  {t('hero.title.highlight')}
                 </span>
               </h1>
 
@@ -169,6 +181,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   <img
                     src={heroImage}
                     alt="Vasquez Home Improvement - Master Craftsmen"
+                    onError={handleImageError}
                     className="relative z-10 w-full max-w-[420px] sm:max-w-[500px] h-auto max-h-[380px] sm:max-h-[460px] object-contain select-none filter drop-shadow-[0_16px_36px_rgba(0,102,255,0.36)]"
                     loading="eager"
                   />
@@ -179,28 +192,28 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   {/* Sleek mobile proof pill */}
                   <div className="mt-2 z-10 bg-slate-900/90 backdrop-blur-md border border-cyan-500/30 px-3.5 py-1.5 rounded-full shadow-lg flex items-center gap-2 text-[11px] text-slate-200">
                     <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
-                    <span className="font-semibold text-white">Owner on Every Site</span>
+                    <span className="font-semibold text-white">{t('hero.mobile.owner')}</span>
                     <span className="text-slate-500">·</span>
-                    <span className="text-cyan-300 font-bold text-[10px]">Serving NY, NJ & CT</span>
+                    <span className="text-cyan-300 font-bold text-[10px]">{t('hero.mobile.serving')}</span>
                   </div>
                 </div>
               </div>
               
               <p className="text-base sm:text-lg text-slate-300 max-w-2xl leading-relaxed font-normal">
-                Direct owner-supervised construction delivering structural composite decks, precision roofing, luxury kitchen and bath remodels, additions, and complete interior restorations across New York, New Jersey, and Connecticut. Guaranteed written timelines with zero subcontracting runaround.
+                {t('hero.desc')}
               </p>
             </div>
 
             {/* Quick Interactive Trade Selectors */}
             <div className="space-y-2 pt-1">
               <div className="flex items-center justify-between text-xs text-slate-400">
-                <span className="font-medium">Select your project type for instant priority estimate:</span>
+                <span className="font-medium">{t('hero.selectPrompt')}</span>
                 <a 
                   href="#services-section" 
                   onClick={scrollToTrades}
                   className="text-cyan-400 hover:text-cyan-300 font-semibold inline-flex items-center gap-0.5 transition-colors"
                 >
-                  <span>All 10 Trades</span>
+                  <span>{t('hero.allTrades')}</span>
                   <ChevronRight className="w-3.5 h-3.5" />
                 </a>
               </div>
@@ -215,7 +228,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     }}
                     className="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-900/90 hover:bg-blue-600 border border-slate-700/80 hover:border-blue-400 text-slate-200 hover:text-white transition-all shadow-sm cursor-pointer flex items-center gap-1.5 active:scale-95 group"
                   >
-                    <span>{service.label}</span>
+                    <span>{lang === 'es' ? service.labelEs : service.labelEn}</span>
                     <ArrowRight className="w-3 h-3 text-cyan-400 group-hover:text-white transition-colors" />
                   </button>
                 ))}
@@ -228,7 +241,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 onClick={onOpenEstimateModal}
                 className="px-6 py-3.5 rounded-xl text-sm font-bold bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white shadow-lg shadow-blue-600/30 transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2 cursor-pointer group"
               >
-                <span>Schedule Free Consultation</span>
+                <span>{t('hero.btn.consult')}</span>
                 <ArrowRight className="w-4 h-4 text-white group-hover:translate-x-1 transition-transform" />
               </button>
 
@@ -238,7 +251,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               >
                 <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                 <Phone className="w-4 h-4 text-cyan-400" />
-                <span className="font-mono tracking-tight font-bold">(609) 356-9141</span>
+                <span className="font-mono tracking-tight font-bold">{t('hero.btn.call')}</span>
               </a>
             </div>
 
@@ -265,7 +278,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 {/* Verified 150+ Badge */}
                 <div 
                   className="relative flex items-center justify-center w-10 h-10 rounded-full ring-2 ring-slate-950 bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-500 text-white font-mono font-black text-xs shadow-lg shrink-0 cursor-pointer"
-                  title="150+ Verified Homeowners Across Central NJ"
+                  title="150+ Verified Homeowners Across NY, NJ & CT"
                 >
                   +150
                 </div>
@@ -287,15 +300,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     ))}
                   </div>
                   <span className="font-mono font-black text-sm text-white group-hover:text-cyan-300 transition-colors">
-                    5.0 / 5.0
+                    {t('hero.rating')}
                   </span>
                   <span className="text-xs text-slate-400 font-medium">
-                    (150+ Verified Reviews)
+                    {t('hero.verifiedReviews')}
                   </span>
                 </div>
                 
                 <span className="text-xs text-slate-300 group-hover:text-white transition-colors mt-0.5">
-                  Top-Rated Licensed Home Improvement across NY, NJ & Connecticut
+                  {t('hero.ratingSub')}
                 </span>
               </a>
 
@@ -304,16 +317,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             {/* 3 Key Numerical Proof Anchors */}
             <div className="grid grid-cols-3 gap-4 pt-1 text-left">
               <div className="border-l-2 border-blue-500/60 pl-3">
-                <div className="text-xl sm:text-2xl font-black font-mono text-white tracking-tight">15+</div>
-                <div className="text-[11px] text-slate-400 font-medium">Years Tri-State Experience</div>
+                <div className="text-xl sm:text-2xl font-black font-mono text-white tracking-tight">{t('hero.stat.years')}</div>
+                <div className="text-[11px] text-slate-400 font-medium">{t('hero.stat.yearsLabel')}</div>
               </div>
               <div className="border-l-2 border-cyan-500/60 pl-3">
-                <div className="text-xl sm:text-2xl font-black font-mono text-white tracking-tight">100%</div>
-                <div className="text-[11px] text-slate-400 font-medium">Township Code Pass Rate</div>
+                <div className="text-xl sm:text-2xl font-black font-mono text-white tracking-tight">{t('hero.stat.pass')}</div>
+                <div className="text-[11px] text-slate-400 font-medium">{t('hero.stat.passLabel')}</div>
               </div>
               <div className="border-l-2 border-emerald-500/60 pl-3">
-                <div className="text-xl sm:text-2xl font-black font-mono text-white tracking-tight">0%</div>
-                <div className="text-[11px] text-slate-400 font-medium">Subcontractor Runaround</div>
+                <div className="text-xl sm:text-2xl font-black font-mono text-white tracking-tight">{t('hero.stat.sub')}</div>
+                <div className="text-[11px] text-slate-400 font-medium">{t('hero.stat.subLabel')}</div>
               </div>
             </div>
 
@@ -347,26 +360,27 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   </div>
                   <div className="text-left">
                     <div className="text-xs font-black tracking-tight text-white flex items-center gap-1.5">
-                      <span>Owner-Supervised Site</span>
-                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-500/20 text-cyan-300 font-mono font-bold">TODAY</span>
+                      <span>{t('hero.badge.owner')}</span>
+                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-500/20 text-cyan-300 font-mono font-bold">{t('hero.badge.today')}</span>
                     </div>
-                    <div className="text-[11px] text-slate-300 font-medium">Master Builder Vasquez On Daily Execution</div>
+                    <div className="text-[11px] text-slate-300 font-medium">{t('hero.badge.ownerSub')}</div>
                   </div>
                 </div>
 
                 {/* Badge 2: Corridor Location Pill */}
                 <div className="hidden xl:flex items-center gap-1.5 bg-slate-950/80 backdrop-blur-md border border-slate-700/80 px-3 py-1.5 rounded-full text-[11px] text-blue-200 shadow-lg">
                   <MapPin className="w-3.5 h-3.5 text-cyan-400" />
-                  <span className="font-semibold text-cyan-300">Serving NY, NJ & Connecticut</span>
+                  <span className="font-semibold text-cyan-300">{t('hero.badge.dispatch')}</span>
                 </div>
               </div>
 
-              {/* The Hero Image (Authentic Craftsmen / Custom Image Made Big & Prominent on Desktop) */}
+              {/* The Hero Image (Bundled First-Class Asset, with Public & Hosted Fallbacks) */}
               <div className="relative w-full flex items-center justify-center group">
                 <img
                   src={heroImage}
                   alt="Vasquez Home Improvement - Master Craftsmen"
                   referrerPolicy="no-referrer"
+                  onError={handleImageError}
                   className="w-full max-w-[680px] sm:max-w-[780px] md:max-w-2xl lg:max-w-[850px] xl:max-w-[960px] 2xl:max-w-[1040px] h-auto max-h-[680px] sm:max-h-[780px] lg:max-h-[860px] xl:max-h-[940px] 2xl:max-h-[1020px] object-contain select-none transition-all duration-500 group-hover:scale-[1.015] filter drop-shadow-[0_24px_48px_rgba(30,64,175,0.4)]"
                   loading="eager"
                 />
@@ -383,10 +397,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   </div>
                   <div className="text-left">
                     <div className="text-xs font-black tracking-tight text-white flex items-center gap-1.5">
-                      <span>Guaranteed Written Estimate</span>
-                      <span className="text-[10px] text-cyan-300 font-mono font-bold">0% SURPRISES</span>
+                      <span>{t('hero.badge.estimate')}</span>
+                      <span className="text-[10px] text-cyan-300 font-mono font-bold">{t('hero.badge.surprises')}</span>
                     </div>
-                    <div className="text-[11px] text-slate-300 font-medium">100% Township Inspection Approval Record</div>
+                    <div className="text-[11px] text-slate-300 font-medium">{t('hero.badge.estimateSub')}</div>
                   </div>
                 </div>
               </div>
@@ -400,17 +414,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         {/* Bottom 4 Architectural Value Pillars Bar */}
         <div className="mt-12 sm:mt-16 pt-8 border-t border-slate-800/80">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {VALUE_PILLARS.map((pillar, idx) => (
+            {[1, 2, 3, 4].map((idx) => (
               <div 
                 key={idx}
                 className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800/70 hover:border-blue-500/40 transition-colors"
               >
                 <div className="flex items-center gap-2 text-white font-bold text-sm">
                   <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0" />
-                  <span>{pillar.title}</span>
+                  <span>{t(`pillar.${idx}.title`)}</span>
                 </div>
                 <p className="mt-1.5 text-xs text-slate-400 leading-relaxed">
-                  {pillar.desc}
+                  {t(`pillar.${idx}.desc`)}
                 </p>
               </div>
             ))}

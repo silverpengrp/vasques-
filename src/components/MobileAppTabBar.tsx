@@ -12,6 +12,7 @@ import {
   Compass
 } from 'lucide-react';
 import { VasquezLogoIcon } from './VasquezLogoIcon';
+import { useLanguage } from '../context/LanguageContext';
 
 interface MobileAppTabBarProps {
   onOpenEstimateModal: () => void;
@@ -22,6 +23,7 @@ export const MobileAppTabBar: React.FC<MobileAppTabBarProps> = ({
   onOpenEstimateModal,
   onSelectService
 }) => {
+  const { lang, t } = useLanguage();
   const [activeTab, setActiveTab] = useState<'home' | 'work' | 'trades' | 'estimate'>('home');
   const [sheetOpen, setSheetOpen] = useState(false);
 
@@ -85,7 +87,7 @@ export const MobileAppTabBar: React.FC<MobileAppTabBarProps> = ({
             <div className={`p-1 rounded-xl transition-all ${activeTab === 'home' ? 'bg-blue-600/25 text-cyan-300' : ''}`}>
               <Home className="w-5 h-5 stroke-[2.2]" />
             </div>
-            <span className="text-[10px] tracking-tight mt-0.5">Home</span>
+            <span className="text-[10px] tracking-tight mt-0.5">{lang === 'es' ? 'Inicio' : 'Home'}</span>
           </button>
 
           {/* TAB 2: BEFORE & AFTER (WORK) */}
@@ -100,7 +102,7 @@ export const MobileAppTabBar: React.FC<MobileAppTabBarProps> = ({
             <div className={`p-1 rounded-xl transition-all ${activeTab === 'work' ? 'bg-blue-600/25 text-cyan-300' : ''}`}>
               <Sparkles className="w-5 h-5 stroke-[2.2]" />
             </div>
-            <span className="text-[10px] tracking-tight mt-0.5">Our Work</span>
+            <span className="text-[10px] tracking-tight mt-0.5">{lang === 'es' ? 'Trabajos' : 'Our Work'}</span>
             <span className="absolute top-1 right-2 w-1.5 h-1.5 rounded-full bg-cyan-400" />
           </button>
 
@@ -112,7 +114,7 @@ export const MobileAppTabBar: React.FC<MobileAppTabBarProps> = ({
               aria-label="Call Vasquez Home Improvement Hotline"
             >
               <Phone className="w-5 h-5 text-white animate-pulse" />
-              <span className="text-[8px] font-black uppercase tracking-tighter mt-0.5">Call</span>
+              <span className="text-[8px] font-black uppercase tracking-tighter mt-0.5">{lang === 'es' ? 'Llamar' : 'Call'}</span>
             </a>
           </div>
 
@@ -128,7 +130,7 @@ export const MobileAppTabBar: React.FC<MobileAppTabBarProps> = ({
             <div className={`p-1 rounded-xl transition-all ${activeTab === 'trades' ? 'bg-blue-600/25 text-cyan-300' : ''}`}>
               <Layers className="w-5 h-5 stroke-[2.2]" />
             </div>
-            <span className="text-[10px] tracking-tight mt-0.5">Trades</span>
+            <span className="text-[10px] tracking-tight mt-0.5">{lang === 'es' ? 'Oficios' : 'Trades'}</span>
           </button>
 
           {/* TAB 4: FREE ESTIMATE (MODAL TRIGGER) */}
@@ -139,7 +141,7 @@ export const MobileAppTabBar: React.FC<MobileAppTabBarProps> = ({
             <div className="p-1 rounded-xl bg-blue-500/15 border border-blue-400/40 text-cyan-300 shadow-sm">
               <FileText className="w-5 h-5 stroke-[2.2]" />
             </div>
-            <span className="text-[10px] font-bold tracking-tight mt-0.5">Estimate</span>
+            <span className="text-[10px] font-bold tracking-tight mt-0.5">{lang === 'es' ? 'Presupuesto' : 'Estimate'}</span>
           </button>
 
         </div>

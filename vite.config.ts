@@ -67,6 +67,7 @@ function saveHeroImagePlugin(): Plugin {
 
 export default defineConfig(() => {
   return {
+    base: './',
     plugins: [react(), tailwindcss(), saveHeroImagePlugin()],
     resolve: {
       alias: {

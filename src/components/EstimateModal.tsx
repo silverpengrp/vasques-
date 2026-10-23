@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, Phone, Send, CheckCircle2, ShieldCheck } from 'lucide-react';
 import { SERVICES_DATA } from '../data/servicesData';
+import { useLanguage } from '../context/LanguageContext';
 
 interface EstimateModalProps {
   isOpen: boolean;
@@ -20,6 +21,7 @@ export const EstimateModal: React.FC<EstimateModalProps> = ({
   preselectedService,
   calculationDetails
 }) => {
+  const { t } = useLanguage();
   const [submitted, setSubmitted] = useState(false);
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
@@ -78,11 +80,11 @@ export const EstimateModal: React.FC<EstimateModalProps> = ({
           <div>
             <div className="flex items-center gap-2 text-xs font-bold text-blue-600 uppercase tracking-widest mb-1">
               <ShieldCheck className="w-4 h-4 text-blue-600" />
-              <span>Licensed Contractor · Serving NY, NJ & Connecticut</span>
+              <span>{t('modal.subtitle')}</span>
             </div>
 
             <h3 className="text-2xl font-black text-slate-900 tracking-tight">
-              Request Your Free On-Site Quote
+              {t('modal.title')}
             </h3>
 
             {calculationDetails && (
@@ -98,7 +100,7 @@ export const EstimateModal: React.FC<EstimateModalProps> = ({
             <form onSubmit={handleSubmit} className="mt-4 space-y-3">
               <div>
                 <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                  Full Name *
+                  {t('modal.name')}
                 </label>
                 <input
                   type="text"
@@ -113,7 +115,7 @@ export const EstimateModal: React.FC<EstimateModalProps> = ({
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                    Phone Number *
+                    {t('modal.phone')}
                   </label>
                   <input
                     type="tel"
@@ -127,7 +129,7 @@ export const EstimateModal: React.FC<EstimateModalProps> = ({
 
                 <div>
                   <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                    City, Township & State *
+                    {t('modal.town')}
                   </label>
                   <input
                     type="text"
@@ -142,7 +144,7 @@ export const EstimateModal: React.FC<EstimateModalProps> = ({
 
               <div>
                 <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                  Trade Service Needed
+                  {t('modal.service')}
                 </label>
                 <select
                   value={service}
@@ -158,7 +160,7 @@ export const EstimateModal: React.FC<EstimateModalProps> = ({
 
               <div>
                 <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                  Brief Project Description
+                  {t('modal.notes', 'Brief Project Description')}
                 </label>
                 <textarea
                   rows={2}
@@ -174,7 +176,7 @@ export const EstimateModal: React.FC<EstimateModalProps> = ({
                 className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-black text-xs uppercase tracking-wider rounded-xl shadow-lg shadow-blue-600/25 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95"
               >
                 <Send className="w-4 h-4" />
-                <span>Submit For Guaranteed Written Estimate</span>
+                <span>{t('modal.submit')}</span>
               </button>
             </form>
 

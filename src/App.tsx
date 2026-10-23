@@ -4,6 +4,7 @@
  */
 
 import React, { useState } from 'react';
+import { LanguageProvider } from './context/LanguageContext';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { AllBeforeAfterGallery } from './components/AllBeforeAfterGallery';
@@ -30,7 +31,8 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-blue-600 selection:text-white pb-20 md:pb-0">
+    <LanguageProvider>
+      <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-blue-600 selection:text-white pb-20 md:pb-0">
       {/* PWA In-App Install Prompt Banner */}
       <PWAInstallBanner />
 
@@ -95,6 +97,7 @@ export default function App() {
         onClose={() => setEstimateModalOpen(false)}
         preselectedService={modalService}
       />
-    </div>
+      </div>
+    </LanguageProvider>
   );
 }

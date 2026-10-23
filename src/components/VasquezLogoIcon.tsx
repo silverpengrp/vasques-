@@ -9,11 +9,19 @@ interface VasquezLogoIconProps {
 export const VasquezLogoIcon: React.FC<VasquezLogoIconProps> = ({ 
   className = "w-14 h-14",
   size,
-  alt = "Vasquez Home Improvement Contractor Master Wolf Emblem"
+  alt = "Vasquez Home Improvement Contractor LLC Master Craftsmen Emblem"
 }) => {
   const [imgError, setImgError] = useState(false);
 
-  // If the user's wolf badge image loads cleanly, render it with vibrant illuminated contractor styling
+  const logoSrc = (() => {
+    try {
+      const custom = localStorage.getItem('vasquez_custom_logo_icon');
+      if (custom) return custom;
+    } catch {}
+    return '/vasquez_logo_circle_512.png';
+  })();
+
+  // Render official contractor duo emblem with vibrant illuminated styling
   if (!imgError) {
     return (
       <div 
@@ -21,14 +29,14 @@ export const VasquezLogoIcon: React.FC<VasquezLogoIconProps> = ({
         style={size ? { width: size, height: size } : undefined}
       >
         <img
-          src="/vasquez_wolf_logo.png"
+          src={logoSrc}
           alt={alt}
           className="w-full h-full object-cover object-center rounded-full transform hover:scale-105 transition-transform duration-300"
           onError={() => setImgError(true)}
           loading="eager"
         />
         {/* Subtle illuminated inner rim highlight */}
-        <div className="absolute inset-0 rounded-full border border-cyan-400/30 pointer-events-none" />
+        <div className="absolute inset-0 rounded-full border border-cyan-400/40 pointer-events-none" />
       </div>
     );
   }
