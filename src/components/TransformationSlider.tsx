@@ -33,8 +33,8 @@ const TRANSFORMATIONS: TransformationProject[] = [
     location: 'Toms River, NJ',
     duration: '6 Business Days',
     sqft: '680 sq ft',
-    beforeImg: '/projects/deck_remodel_before_1791564905775.jpg',
-    afterImg: '/projects/deck_remodel_finished_1791564892954.jpg',
+    beforeImg: './projects/deck_remodel_before_1791564905775.jpg',
+    afterImg: './projects/deck_remodel_finished_1791564892954.jpg',
     scopeSummary: 'Full teardown of splintered 25-year-old pine deck. Poured new 42" frost-line concrete footings, reinforced 2x10 joists, laid premium Trex Transcend grooved boards, installed matte black aluminum cable railings, and wired low-voltage warm LED stair lighting.',
     materialsUsed: ['Trex Transcend Composite', 'Black Powder-Coated Cable Railing', '42" Concrete Sonotubes', 'Integrated 12V Stair Lights'],
     permitPassed: 'Ocean County Building & Footing Inspection Passed'
@@ -46,8 +46,8 @@ const TRANSFORMATIONS: TransformationProject[] = [
     location: 'Princeton, NJ',
     duration: '14 Business Days',
     sqft: '340 sq ft',
-    beforeImg: '/projects/kitchen_remodel_before_1791564933038.jpg',
-    afterImg: '/projects/kitchen_remodel_finished_1791564920281.jpg',
+    beforeImg: './projects/kitchen_remodel_before_1791564933038.jpg',
+    afterImg: './projects/kitchen_remodel_finished_1791564920281.jpg',
     scopeSummary: 'Demolished outdated 1980s oak partition walls to create continuous open-concept living. Installed custom soft-close navy and white shaker cabinets, 9-foot Calacatta quartz waterfall edge island, Italian herringbone tile backsplash, and smart under-cabinet lighting.',
     materialsUsed: ['Calacatta Gold Quartz', 'Solid Maple Shaker Cabinets', 'Brushed Brass Hardware', 'White Oak Plank Flooring'],
     permitPassed: 'Mercer County Electrical, Plumbing & Framing Approved'
@@ -59,8 +59,8 @@ const TRANSFORMATIONS: TransformationProject[] = [
     location: 'Cherry Hill, NJ',
     duration: '9 Business Days',
     sqft: '185 sq ft',
-    beforeImg: '/projects/bath_remodel_before_1791564997436.jpg',
-    afterImg: '/projects/bath_remodel_finished_1791564980863.jpg',
+    beforeImg: './projects/bath_remodel_before_1791564997436.jpg',
+    afterImg: './projects/bath_remodel_finished_1791564980863.jpg',
     scopeSummary: 'Removed failing fiberglass enclosure and dated yellow tiles. Complete subfloor reinforcement with Schluter-KERDI waterproofing membrane, curbless walk-in shower with herringbone marble, freestanding acrylic tub, dual white oak vanities, and matte black fixtures.',
     materialsUsed: ['Schluter Waterproofing System', 'Carrara Marble Herringbone', 'Matte Black Moen Fixtures', 'Custom Frameless 3/8" Glass'],
     permitPassed: 'Camden County Plumbing & Rough-in Inspection Certified'

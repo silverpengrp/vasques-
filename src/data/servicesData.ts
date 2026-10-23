@@ -213,8 +213,8 @@ export const PROJECTS_DATA: ProjectItem[] = [
     category: 'Decks & Patios',
     location: 'Toms River, NJ',
     description: 'Designed and constructed a 680 sq ft bi-level composite deck featuring integrated low-voltage stair riser lights, powder-coated pergola, and cocktail railings.',
-    afterImg: '/projects/deck_remodel_finished_1791564892954.jpg',
-    beforeImg: '/projects/deck_remodel_before_1791564905775.jpg',
+    afterImg: './projects/deck_remodel_finished_1791564892954.jpg',
+    beforeImg: './projects/deck_remodel_before_1791564905775.jpg',
     tag: 'Composite Decking',
     duration: '6 Days'
   },
@@ -224,8 +224,8 @@ export const PROJECTS_DATA: ProjectItem[] = [
     category: 'Remodeling',
     location: 'Princeton, NJ',
     description: 'Removed non-load-bearing partition, installed 9ft Calacatta quartz waterfall island, custom navy shaker cabinets, and recessed lighting array.',
-    afterImg: '/projects/kitchen_remodel_finished_1791564920281.jpg',
-    beforeImg: '/projects/kitchen_remodel_before_1791564933038.jpg',
+    afterImg: './projects/kitchen_remodel_finished_1791564920281.jpg',
+    beforeImg: './projects/kitchen_remodel_before_1791564933038.jpg',
     tag: 'Full Kitchen',
     duration: '14 Days'
   },
@@ -235,8 +235,8 @@ export const PROJECTS_DATA: ProjectItem[] = [
     category: 'Remodeling',
     location: 'Cherry Hill, NJ',
     description: 'Schluter-KERDI waterproofed curbless marble herringbone shower, freestanding soaking tub, floating double vanity, and black matte fixtures.',
-    afterImg: '/projects/bath_remodel_finished_1791564980863.jpg',
-    beforeImg: '/projects/bath_remodel_before_1791564997436.jpg',
+    afterImg: './projects/bath_remodel_finished_1791564980863.jpg',
+    beforeImg: './projects/bath_remodel_before_1791564997436.jpg',
     tag: 'Luxury Bath',
     duration: '9 Days'
   },
@@ -246,7 +246,8 @@ export const PROJECTS_DATA: ProjectItem[] = [
     category: 'Roofing',
     location: 'Trenton / Hamilton, NJ',
     description: 'Full tear-off of 32 squares, replaced damaged plywood sheathing, installed ice-and-water barrier, GAF Timberline HDZ charcoal shingles.',
-    afterImg: '/src/assets/images/vasquez_contractor_hero_1790953526300.jpg',
+    afterImg: './projects/roof_replacement_finished_1791752282421.jpg',
+    beforeImg: './projects/roof_replacement_before_1791752292483.jpg',
     tag: '50-Yr Warranty',
     duration: '1.5 Days'
   }

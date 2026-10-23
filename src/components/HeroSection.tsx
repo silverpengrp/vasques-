@@ -56,9 +56,10 @@ const POPULAR_SERVICES = [
   { id: 'Flooring', labelEn: 'Hardwood & Tile', labelEs: 'Pisos y Azulejos' }
 ];
 
-// Fallback image paths engineered for universal GitHub Pages & static publishing
-const RELATIVE_PUBLIC_HERO = `${import.meta.env.BASE_URL}vasquez_white_jumper_hero.png`;
-const RELIABLE_HOSTED_HERO_FALLBACK = 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80';
+// Primary and fallback image paths engineered for universal GitHub Pages & static publishing
+const UPLOADED_HERO_PATH = `${import.meta.env.BASE_URL}assets/aistudio/fd5093c5-25cf-4a5f-949c-8a732d615fe8-removebg-preview_c5601363.png`;
+const RELATIVE_PUBLIC_HERO = `${import.meta.env.BASE_URL}vasquez_hero_main.png`;
+const RELIABLE_HOSTED_HERO_FALLBACK = `${import.meta.env.BASE_URL}vasquez_white_jumper_hero.png`;
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ 
   onOpenEstimateModal, 
@@ -66,34 +67,22 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 }) => {
   const { t, lang } = useLanguage();
 
-  // Safely resolve the hero image:
-  // 1. Prioritize bundled Vite asset (heroCraftsmenImg) which is bundled with a relative content-hash path
-  // 2. Reject any temporary preview URLs or blob URLs that may linger in localStorage
-  const [heroImage] = useState<string>(() => {
+  // Clear any outdated localStorage override that might be pointing to obsolete previews
+  React.useEffect(() => {
     try {
-      const saved = localStorage.getItem('vasquez_custom_hero_image');
-      if (saved) {
-        // Discard temporary preview URLs or broken blob URLs
-        if (saved.startsWith('blob:') || saved.includes('.run.app') || saved.includes('localhost')) {
-          localStorage.removeItem('vasquez_custom_hero_image');
-          return heroCraftsmenImg;
-        }
-        // Valid data URL or relative path
-        if (saved.startsWith('data:image/') || saved.startsWith('./') || saved.startsWith('/')) {
-          return saved;
-        }
-      }
-      return heroCraftsmenImg;
-    } catch {
-      return heroCraftsmenImg;
-    }
-  });
+      localStorage.removeItem('vasquez_custom_hero_image');
+    } catch {}
+  }, []);
+
+  const heroImage = heroCraftsmenImg || UPLOADED_HERO_PATH;
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     const target = e.currentTarget;
     if (target.src !== heroCraftsmenImg) {
       target.src = heroCraftsmenImg;
-    } else if (!target.src.includes('vasquez_white_jumper_hero.png')) {
+    } else if (!target.src.includes('aistudio')) {
+      target.src = UPLOADED_HERO_PATH;
+    } else if (!target.src.includes('vasquez_hero_main.png')) {
       target.src = RELATIVE_PUBLIC_HERO;
     } else {
       target.src = RELIABLE_HOSTED_HERO_FALLBACK;

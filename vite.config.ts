@@ -29,7 +29,13 @@ function saveHeroImagePlugin(): Plugin {
             fs.mkdirSync(publicDir, { recursive: true });
           }
 
-          // Permanently save to vasquez_white_jumper_hero.png, saved_hero.png and 22222-Photoroom.png
+          // Permanently save to src/assets/images and public directory
+          const srcAssetsDir = path.resolve(__dirname, 'src/assets/images');
+          if (!fs.existsSync(srcAssetsDir)) {
+            fs.mkdirSync(srcAssetsDir, { recursive: true });
+          }
+          fs.writeFileSync(path.join(srcAssetsDir, 'vasquez_hero_main.png'), buffer);
+          fs.writeFileSync(path.join(publicDir, 'vasquez_hero_main.png'), buffer);
           fs.writeFileSync(path.join(publicDir, 'vasquez_white_jumper_hero.png'), buffer);
           fs.writeFileSync(path.join(publicDir, 'saved_hero.png'), buffer);
           fs.writeFileSync(path.join(publicDir, '22222-Photoroom.png'), buffer);

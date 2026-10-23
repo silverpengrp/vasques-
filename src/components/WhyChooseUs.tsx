@@ -1,5 +1,6 @@
 import React from 'react';
 import { ShieldCheck, Users, Award, Check } from 'lucide-react';
+import helmetStickerImg from '../assets/images/vasquez_blue_helmet_sticker_transparent.png';
 
 export const WhyChooseUs: React.FC = () => {
   return (
@@ -120,7 +121,7 @@ export const WhyChooseUs: React.FC = () => {
             <div className="md:col-span-4 flex justify-center">
               <div className="w-44 h-44 md:w-52 md:h-52 flex items-center justify-center p-2 relative group">
                 <img
-                  src="/vasquez_blue_helmet_sticker_transparent.png"
+                  src={helmetStickerImg}
                   alt="Vasquez Blue Helmet Contractor Sticker Logo"
                   className="w-full h-full object-contain filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.18)] group-hover:scale-105 group-hover:-rotate-2 transition-transform duration-300"
                   referrerPolicy="no-referrer"
