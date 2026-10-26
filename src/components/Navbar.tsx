@@ -83,6 +83,18 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenEstimateModal }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Lock body scroll when mobile drawer is open to prevent awkward background scrolling
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
   const scrollTo = (id: string) => {
     setMobileMenuOpen(false);
     const element = document.getElementById(id);
@@ -107,37 +119,37 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenEstimateModal }) => {
         <nav className="flex items-center justify-between h-14 sm:h-16 relative">
             
             {/* LEFT: BRAND IDENTITY */}
-            <div className="flex items-center gap-3 shrink-0">
+            <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1 sm:flex-initial">
               <a
                 href="#hero-section"
-                className="flex items-center gap-3 group focus:outline-none cursor-pointer"
+                className="flex items-center gap-2 sm:gap-3 group focus:outline-none cursor-pointer min-w-0"
                 aria-label="Vasquez Home Improvement Contractor LLC - Home"
               >
-                {/* Circular Emblem Container with Wolf Icon (Enlarged & Illuminated) */}
-                <div className="relative flex items-center justify-center p-1 rounded-full bg-gradient-to-b from-blue-600/40 via-slate-800 to-slate-950 border-2 border-blue-400/70 shadow-lg shadow-blue-900/60 group-hover:scale-108 group-hover:border-cyan-300 transition-all duration-300">
-                  <VasquezLogoIcon className="w-12 h-12 sm:w-14 sm:h-14 filter drop-shadow-[0_4px_12px_rgba(0,102,255,0.7)]" />
+                {/* Circular Emblem Container with Wolf Icon (Crisp, perfectly sized on all screens) */}
+                <div className="relative flex items-center justify-center p-0.5 sm:p-1 rounded-full bg-gradient-to-b from-blue-600/40 via-slate-800 to-slate-950 border-2 border-blue-400/70 shadow-lg shadow-blue-900/60 group-hover:scale-105 group-hover:border-cyan-300 transition-all duration-300 shrink-0">
+                  <VasquezLogoIcon className="w-9 h-9 sm:w-11 sm:h-11 md:w-13 md:h-13 filter drop-shadow-[0_4px_12px_rgba(0,102,255,0.7)]" />
                 </div>
 
                 {/* Company Name Typography */}
-                <div className="flex flex-col text-left leading-none">
-                  <div className="flex items-center gap-2">
-                    <span className="text-base sm:text-lg font-black text-white tracking-wide uppercase font-sans group-hover:text-cyan-300 transition-colors">
+                <div className="flex flex-col text-left leading-none min-w-0">
+                  <div className="flex items-center gap-1.5 sm:gap-2">
+                    <span className="text-sm sm:text-base md:text-lg font-black text-white tracking-wide uppercase font-sans group-hover:text-cyan-300 transition-colors truncate">
                       VASQUEZ
                     </span>
-                    <span className="hidden xl:inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-extrabold tracking-widest uppercase bg-blue-950/90 text-cyan-300 border border-blue-700/80">
+                    <span className="hidden xl:inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-extrabold tracking-widest uppercase bg-blue-950/90 text-cyan-300 border border-blue-700/80 shrink-0">
                       NY · NJ · CT
                     </span>
                   </div>
-                  <div className="flex items-center gap-1.5 mt-1">
-                    <span className="text-[10px] sm:text-[11px] font-semibold text-slate-300 tracking-wide uppercase">
+                  <div className="flex items-center gap-1.5 mt-0.5 sm:mt-1 min-w-0">
+                    <span className="text-[9px] sm:text-[10px] md:text-[11px] font-semibold text-slate-300 tracking-wide uppercase truncate">
                       {t('brand.subtitle')}
                     </span>
                     <span className="hidden sm:inline text-slate-500 text-[10px]">·</span>
-                    <span className="hidden sm:inline text-[10px] font-mono font-medium text-cyan-400">
+                    <span className="hidden sm:inline text-[10px] font-mono font-medium text-cyan-400 shrink-0">
                       Lic #13VH13437500
                     </span>
                     <span className="hidden md:inline text-slate-500 text-[10px]">·</span>
-                    <span className="hidden md:inline text-[10px] font-bold text-emerald-400">
+                    <span className="hidden md:inline text-[10px] font-bold text-emerald-400 shrink-0">
                       {t('brand.serving')}
                     </span>
                   </div>
@@ -229,17 +241,17 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenEstimateModal }) => {
             </div>
 
             {/* MOBILE ACTIONS: TRANSLATE TOGGLE & THREE-BAR MENU BUTTON */}
-            <div className="flex md:hidden items-center gap-2">
+            <div className="flex md:hidden items-center gap-1.5 sm:gap-2 shrink-0 ml-2">
               
               {/* Mobile Flag Language Toggle */}
               <div 
-                className="flex items-center p-1 rounded-xl bg-slate-900 border border-slate-700/80 shadow-inner gap-1"
+                className="flex items-center p-0.5 sm:p-1 rounded-xl bg-slate-900 border border-slate-700/80 shadow-inner gap-0.5 sm:gap-1 shrink-0"
                 title={lang === 'en' ? 'Language: English' : 'Idioma: Español'}
               >
                 <button
                   type="button"
                   onClick={() => setLang('en')}
-                  className={`p-1.5 rounded-lg transition-all cursor-pointer flex items-center justify-center ${
+                  className={`p-1 sm:p-1.5 rounded-lg transition-all cursor-pointer flex items-center justify-center ${
                     lang === 'en'
                       ? 'bg-blue-600/90 ring-2 ring-cyan-400 shadow-md shadow-blue-500/30 scale-105'
                       : 'opacity-50 hover:opacity-100 hover:bg-slate-800'
@@ -252,7 +264,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenEstimateModal }) => {
                 <button
                   type="button"
                   onClick={() => setLang('es')}
-                  className={`p-1.5 rounded-lg transition-all cursor-pointer flex items-center justify-center ${
+                  className={`p-1 sm:p-1.5 rounded-lg transition-all cursor-pointer flex items-center justify-center ${
                     lang === 'es'
                       ? 'bg-blue-600/90 ring-2 ring-cyan-400 shadow-md shadow-blue-500/30 scale-105'
                       : 'opacity-50 hover:opacity-100 hover:bg-slate-800'
@@ -264,9 +276,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenEstimateModal }) => {
                 </button>
               </div>
 
+              {/* Mobile Hamburger / Close Button */}
               <button
+                type="button"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2.5 rounded-xl bg-blue-950/80 hover:bg-blue-900 border border-blue-500/50 text-white transition-all active:scale-90 cursor-pointer shadow-md shadow-blue-950/60"
+                className="w-10 h-10 flex items-center justify-center rounded-xl bg-blue-950/80 hover:bg-blue-900 border border-blue-500/50 text-white transition-all active:scale-95 cursor-pointer shadow-md shadow-blue-950/60 shrink-0"
                 aria-label="Toggle Mobile Menu"
                 aria-expanded={mobileMenuOpen}
               >
@@ -279,105 +293,133 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenEstimateModal }) => {
             </div>
 
         </nav>
+      </div>
 
-        {/* MOBILE SLIDE-DOWN DRAWER MENU */}
-        {mobileMenuOpen && (
-          <div className="md:hidden mt-2 bg-slate-950/98 backdrop-blur-2xl border border-blue-500/30 rounded-2xl p-4 shadow-2xl space-y-1.5 animate-in slide-in-from-top-2 text-white">
-            <div className="flex items-center gap-3 pb-3 border-b border-slate-800">
-              <div className="p-1 rounded-full bg-blue-950/80 border-2 border-blue-400/60 shadow-md">
-                <VasquezLogoIcon className="w-11 h-11 filter drop-shadow-md" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="text-sm font-black text-white uppercase tracking-wider truncate">Vasquez Home Improvement</div>
-                <div className="text-[11px] text-cyan-400 font-mono">{t('brand.entity')}</div>
-              </div>
-            </div>
+      {/* MOBILE SLIDE-DOWN DRAWER MENU WITH BACKDROP OVERLAY */}
+      {mobileMenuOpen && (
+        <>
+          {/* Backdrop Overlay - Closes menu on background tap */}
+          <div 
+            className="fixed inset-0 top-14 sm:top-16 z-40 bg-slate-950/80 backdrop-blur-sm md:hidden animate-in fade-in duration-200"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-hidden="true"
+          />
 
-            {/* Language Switcher in Drawer */}
-            <div className="flex items-center justify-between px-3 py-2 bg-slate-900/90 rounded-xl border border-slate-800 mb-1">
-              <span className="text-xs font-semibold text-slate-300">
-                {lang === 'en' ? 'Language / Idioma' : 'Idioma / Language'}
-              </span>
-              <div className="flex items-center gap-1.5">
+          {/* Fixed Dropdown Menu (Directly below navbar, never causes header height shift) */}
+          <div 
+            className="fixed top-14 sm:top-16 left-0 right-0 z-50 md:hidden bg-slate-950/98 backdrop-blur-2xl border-b border-blue-500/40 shadow-2xl px-4 py-4 animate-in slide-in-from-top-2 duration-200 max-h-[calc(100vh-4rem)] overflow-y-auto"
+          >
+            <div className="max-w-md mx-auto space-y-2.5">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="p-1 rounded-full bg-blue-950/80 border-2 border-blue-400/60 shadow-md shrink-0">
+                    <VasquezLogoIcon className="w-10 h-10 filter drop-shadow-md" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-black text-white uppercase tracking-wider truncate">Vasquez Home Improvement</div>
+                    <div className="text-[11px] text-cyan-400 font-mono truncate">{t('brand.entity')}</div>
+                  </div>
+                </div>
                 <button
                   type="button"
-                  onClick={() => setLang('en')}
-                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
-                    lang === 'en'
-                      ? 'bg-blue-600 text-white ring-1 ring-cyan-300 shadow-sm'
-                      : 'opacity-60 hover:opacity-100 bg-slate-800'
-                  }`}
-                  aria-label="English"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="p-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors shrink-0 ml-2"
+                  aria-label="Close menu"
                 >
-                  <USAFlagIcon className="w-4 h-3" />
-                  <span className="text-[11px] font-bold">English</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setLang('es')}
-                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
-                    lang === 'es'
-                      ? 'bg-blue-600 text-white ring-1 ring-cyan-300 shadow-sm'
-                      : 'opacity-60 hover:opacity-100 bg-slate-800'
-                  }`}
-                  aria-label="Español"
-                >
-                  <SpainFlagIcon className="w-4 h-3" />
-                  <span className="text-[11px] font-bold">Español</span>
+                  <X className="w-5 h-5" />
                 </button>
               </div>
-            </div>
 
-            {/* Navigation Categories (Work, Trades, Reviews) */}
-            <button
-              onClick={() => scrollTo('transformations-section')}
-              className="w-full text-left py-2.5 px-3 text-slate-200 hover:text-white hover:bg-slate-800/80 rounded-xl text-xs font-bold flex items-center gap-2.5 cursor-pointer"
-            >
-              <Sparkles className="w-4 h-4 text-cyan-400" />
-              <span>{t('nav.work')}</span>
-            </button>
+              {/* Language Switcher in Drawer */}
+              <div className="flex items-center justify-between px-3 py-2 bg-slate-900/90 rounded-xl border border-slate-800 my-1">
+                <span className="text-xs font-semibold text-slate-300">
+                  {lang === 'en' ? 'Language / Idioma' : 'Idioma / Language'}
+                </span>
+                <div className="flex items-center gap-1.5">
+                  <button
+                    type="button"
+                    onClick={() => setLang('en')}
+                    className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
+                      lang === 'en'
+                        ? 'bg-blue-600 text-white ring-1 ring-cyan-300 shadow-sm'
+                        : 'opacity-60 hover:opacity-100 bg-slate-800'
+                    }`}
+                    aria-label="English"
+                  >
+                    <USAFlagIcon className="w-4 h-3" />
+                    <span className="text-[11px] font-bold">English</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setLang('es')}
+                    className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
+                      lang === 'es'
+                        ? 'bg-blue-600 text-white ring-1 ring-cyan-300 shadow-sm'
+                        : 'opacity-60 hover:opacity-100 bg-slate-800'
+                    }`}
+                    aria-label="Español"
+                  >
+                    <SpainFlagIcon className="w-4 h-3" />
+                    <span className="text-[11px] font-bold">Español</span>
+                  </button>
+                </div>
+              </div>
 
-            <button
-              onClick={() => scrollTo('services-section')}
-              className="w-full text-left py-2.5 px-3 text-slate-200 hover:text-white hover:bg-slate-800/80 rounded-xl text-xs font-bold flex items-center gap-2.5 cursor-pointer"
-            >
-              <Layers className="w-4 h-4 text-blue-400" />
-              <span>{t('nav.trades')}</span>
-            </button>
-
-            <button
-              onClick={() => scrollTo('hero-reviews-section')}
-              className="w-full text-left py-2.5 px-3 text-slate-200 hover:text-white hover:bg-slate-800/80 rounded-xl text-xs font-bold flex items-center gap-2.5 cursor-pointer"
-            >
-              <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
-              <span>{t('nav.reviews')}</span>
-            </button>
-
-            <div className="pt-3 border-t border-slate-800 flex flex-col gap-2">
-              {/* Phone Button */}
-              <a
-                href="tel:+16094818197"
-                className="w-full py-2.5 bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 text-white font-extrabold text-xs sm:text-sm rounded-xl text-center flex items-center justify-center gap-2 border border-blue-400/50 shadow-lg shadow-blue-600/30"
-              >
-                <Phone className="w-3.5 h-3.5 text-white" />
-                <span className="font-mono font-bold tracking-tight">(609) 481-8197</span>
-              </a>
-
-              {/* Free Estimate Button (Matching Blue/Cyan gradient) */}
+              {/* Navigation Categories (Work, Trades, Reviews) */}
               <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenEstimateModal();
-                }}
-                className="w-full py-3 bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 text-white font-black text-xs uppercase tracking-wider rounded-xl text-center shadow-lg shadow-blue-600/30 cursor-pointer flex items-center justify-center gap-2 border border-blue-400/50"
+                type="button"
+                onClick={() => scrollTo('transformations-section')}
+                className="w-full text-left py-2.5 px-3 text-slate-200 hover:text-white hover:bg-slate-800/80 rounded-xl text-xs font-bold flex items-center gap-2.5 cursor-pointer transition-colors"
               >
-                <span>{t('nav.writtenEstimate')}</span>
-                <ArrowRight className="w-4 h-4" />
+                <Sparkles className="w-4 h-4 text-cyan-400 shrink-0" />
+                <span>{t('nav.work')}</span>
               </button>
+
+              <button
+                type="button"
+                onClick={() => scrollTo('services-section')}
+                className="w-full text-left py-2.5 px-3 text-slate-200 hover:text-white hover:bg-slate-800/80 rounded-xl text-xs font-bold flex items-center gap-2.5 cursor-pointer transition-colors"
+              >
+                <Layers className="w-4 h-4 text-blue-400 shrink-0" />
+                <span>{t('nav.trades')}</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => scrollTo('hero-reviews-section')}
+                className="w-full text-left py-2.5 px-3 text-slate-200 hover:text-white hover:bg-slate-800/80 rounded-xl text-xs font-bold flex items-center gap-2.5 cursor-pointer transition-colors"
+              >
+                <Star className="w-4 h-4 text-amber-400 fill-amber-400 shrink-0" />
+                <span>{t('nav.reviews')}</span>
+              </button>
+
+              <div className="pt-2 border-t border-slate-800 flex flex-col gap-2">
+                {/* Phone Button */}
+                <a
+                  href="tel:+16094818197"
+                  className="w-full py-2.5 bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 text-white font-extrabold text-xs sm:text-sm rounded-xl text-center flex items-center justify-center gap-2 border border-blue-400/50 shadow-lg shadow-blue-600/30 active:scale-98 transition-all"
+                >
+                  <Phone className="w-3.5 h-3.5 text-white" />
+                  <span className="font-mono font-bold tracking-tight">(609) 481-8197</span>
+                </a>
+
+                {/* Free Estimate Button (Matching Blue/Cyan gradient) */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onOpenEstimateModal();
+                  }}
+                  className="w-full py-3 bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 text-white font-black text-xs uppercase tracking-wider rounded-xl text-center shadow-lg shadow-blue-600/30 cursor-pointer flex items-center justify-center gap-2 border border-blue-400/50 active:scale-98 transition-all"
+                >
+                  <span>{t('nav.writtenEstimate')}</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
             </div>
           </div>
-        )}
-      </div>
+        </>
+      )}
     </header>
   );
 };
